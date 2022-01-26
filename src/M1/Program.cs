@@ -28,15 +28,19 @@ var app = builder.Build();
 app.MapGet("/api/v1/student", () =>
 {
     activity?.SetTag("Get", "Get request made to M1.");
-})
-    .Produces(StatusCodes.Status200OK)
-    .Produces(StatusCodes.Status404NotFound);
+    HttpClient client = new HttpClient();
+    HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7225/backend");
+    HttpResponseMessage httpResponse = client.Send(httpRequest);
+    return httpResponse.ToString();
+});
+//.Produces(StatusCodes.Status200OK)
+//.Produces(StatusCodes.Status404NotFound);
 
 app.MapPost("/api/v1/student", () =>
 {
     activity?.SetTag("Post", "Post request made to M1");
-})
-    .Produces(StatusCodes.Status200OK)
-    .Produces(StatusCodes.Status400BadRequest);
+});
+    //.Produces(StatusCodes.Status200OK)
+    //.Produces(StatusCodes.Status400BadRequest);
 
 app.Run();
