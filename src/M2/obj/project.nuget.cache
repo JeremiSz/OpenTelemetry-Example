@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ZTrRNew3v+hxONt/FbR4f03dPvbNaJ1TKHc+6z5Ah+JHcayXXov6ri77ihyuLuxLwX0Y+RZzh1JXUosUMRgJJg==",
+  "success": true,
+  "projectFilePath": "C:\\Extra\\opentelemetry\\src\\M2\\M2.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jerem\\.nuget\\packages\\fsharp.core\\6.0.1\\fsharp.core.6.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

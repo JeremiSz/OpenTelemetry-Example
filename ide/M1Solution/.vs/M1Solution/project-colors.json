@@ -5,7 +5,12 @@
       "ProjectGuid": "ba5a625f-62a8-451e-9afe-2ac1651797e2",
       "DisplayName": "M1",
       "ColorIndex": 0
+    },
+    "ab0bd381-001c-499c-bc4a-662d1ba2c8dd": {
+      "ProjectGuid": "ab0bd381-001c-499c-bc4a-662d1ba2c8dd",
+      "DisplayName": "M2",
+      "ColorIndex": 1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 2
 }

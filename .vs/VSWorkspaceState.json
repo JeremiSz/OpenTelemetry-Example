@@ -3,8 +3,9 @@
     "",
     "\\src",
     "\\src\\M1",
-    "\\src\\M1\\Properties"
+    "\\src\\M2",
+    "\\src\\M2\\Controllers"
   ],
-  "SelectedNode": "\\src\\M1\\Program.cs",
+  "SelectedNode": "\\src\\M2\\Controllers\\WeatherForecastController.fs",
   "PreviewInSolutionExplorer": false
 }
