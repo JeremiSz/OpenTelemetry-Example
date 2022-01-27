@@ -60,3 +60,6 @@ C:\Extra\opentelemetry\src\M1\obj\Debug\net6.0\M1.dll
 C:\Extra\opentelemetry\src\M1\obj\Debug\net6.0\ref\M1.dll
 C:\Extra\opentelemetry\src\M1\obj\Debug\net6.0\M1.pdb
 C:\Extra\opentelemetry\src\M1\obj\Debug\net6.0\M1.genruntimeconfig.cache
+E:\opentelemetry\src\m1\bin\Debug\net6.0\OpenTelemetry.Extensions.Hosting.dll
+E:\opentelemetry\src\m1\bin\Debug\net6.0\OpenTelemetry.Instrumentation.AspNetCore.dll
+E:\opentelemetry\src\m1\bin\Debug\net6.0\OpenTelemetry.Instrumentation.Http.dll

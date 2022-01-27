@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Extra\\opentelemetry\\src\\M1\\M1.csproj": {}
+    "E:\\opentelemetry\\src\\m1\\M1.csproj": {}
   },
   "projects": {
-    "C:\\Extra\\opentelemetry\\src\\M1\\M1.csproj": {
+    "E:\\opentelemetry\\src\\m1\\M1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Extra\\opentelemetry\\src\\M1\\M1.csproj",
+        "projectUniqueName": "E:\\opentelemetry\\src\\m1\\M1.csproj",
         "projectName": "M1",
-        "projectPath": "C:\\Extra\\opentelemetry\\src\\M1\\M1.csproj",
-        "packagesPath": "C:\\Users\\jerem\\.nuget\\packages\\",
-        "outputPath": "C:\\Extra\\opentelemetry\\src\\M1\\obj\\",
+        "projectPath": "E:\\opentelemetry\\src\\m1\\M1.csproj",
+        "packagesPath": "C:\\Users\\Liam\\.nuget\\packages\\",
+        "outputPath": "E:\\opentelemetry\\src\\m1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jerem\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Liam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -42,15 +42,27 @@
           "dependencies": {
             "OpenTelemetry": {
               "target": "Package",
-              "version": "[1.1.0, )"
+              "version": "[1.2.0-rc1, )"
             },
             "OpenTelemetry.Exporter.Console": {
               "target": "Package",
-              "version": "[1.1.0, )"
+              "version": "[1.2.0-rc1, )"
             },
             "OpenTelemetry.Exporter.Jaeger": {
               "target": "Package",
-              "version": "[1.1.0, )"
+              "version": "[1.2.0-rc1, )"
+            },
+            "OpenTelemetry.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[1.0.0-rc8, )"
+            },
+            "OpenTelemetry.Instrumentation.AspNetCore": {
+              "target": "Package",
+              "version": "[1.0.0-rc8, )"
+            },
+            "OpenTelemetry.Instrumentation.Http": {
+              "target": "Package",
+              "version": "[1.0.0-rc8, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
