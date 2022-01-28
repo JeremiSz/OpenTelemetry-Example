@@ -40,6 +40,41 @@
               "target": "Package",
               "version": "[6.0.1, )",
               "generatePathProperty": true
+            },
+            "OpenTelemetry": {
+              "target": "Package",
+              "version": "[1.2.0-rc1, )",
+              "generatePathProperty": true
+            },
+            "OpenTelemetry.Exporter.Console": {
+              "target": "Package",
+              "version": "[1.2.0-rc1, )",
+              "generatePathProperty": true
+            },
+            "OpenTelemetry.Exporter.Jaeger": {
+              "target": "Package",
+              "version": "[1.2.0-rc1, )",
+              "generatePathProperty": true
+            },
+            "OpenTelemetry.Exporter.OpenTelemetryProtocol": {
+              "target": "Package",
+              "version": "[1.2.0-rc1, )",
+              "generatePathProperty": true
+            },
+            "OpenTelemetry.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[1.0.0-rc8, )",
+              "generatePathProperty": true
+            },
+            "OpenTelemetry.Instrumentation.AspNetCore": {
+              "target": "Package",
+              "version": "[1.0.0-rc8, )",
+              "generatePathProperty": true
+            },
+            "OpenTelemetry.Instrumentation.Http": {
+              "target": "Package",
+              "version": "[1.0.0-rc8, )",
+              "generatePathProperty": true
             }
           },
           "imports": [

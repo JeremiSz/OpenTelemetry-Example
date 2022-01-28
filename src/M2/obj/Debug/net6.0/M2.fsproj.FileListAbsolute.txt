@@ -31,3 +31,15 @@ C:\Extra\opentelemetry\src\M2\obj\Debug\net6.0\M2.fsproj.CopyComplete
 C:\Extra\opentelemetry\src\M2\obj\Debug\net6.0\M2.dll
 C:\Extra\opentelemetry\src\M2\obj\Debug\net6.0\M2.pdb
 C:\Extra\opentelemetry\src\M2\obj\Debug\net6.0\M2.genruntimeconfig.cache
+C:\Extra\opentelemetry\src\M2\bin\Debug\net6.0\Google.Protobuf.dll
+C:\Extra\opentelemetry\src\M2\bin\Debug\net6.0\Grpc.Core.Api.dll
+C:\Extra\opentelemetry\src\M2\bin\Debug\net6.0\Grpc.Net.Client.dll
+C:\Extra\opentelemetry\src\M2\bin\Debug\net6.0\Grpc.Net.Common.dll
+C:\Extra\opentelemetry\src\M2\bin\Debug\net6.0\OpenTelemetry.dll
+C:\Extra\opentelemetry\src\M2\bin\Debug\net6.0\OpenTelemetry.Api.dll
+C:\Extra\opentelemetry\src\M2\bin\Debug\net6.0\OpenTelemetry.Exporter.Console.dll
+C:\Extra\opentelemetry\src\M2\bin\Debug\net6.0\OpenTelemetry.Exporter.Jaeger.dll
+C:\Extra\opentelemetry\src\M2\bin\Debug\net6.0\OpenTelemetry.Exporter.OpenTelemetryProtocol.dll
+C:\Extra\opentelemetry\src\M2\bin\Debug\net6.0\OpenTelemetry.Extensions.Hosting.dll
+C:\Extra\opentelemetry\src\M2\bin\Debug\net6.0\OpenTelemetry.Instrumentation.AspNetCore.dll
+C:\Extra\opentelemetry\src\M2\bin\Debug\net6.0\OpenTelemetry.Instrumentation.Http.dll

@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenTelemetryTracing(b =>
 {
     b
-    .AddOtlpExporter()
+    .AddJaegerExporter()
     .AddSource(serviceName)
     .SetResourceBuilder(
         ResourceBuilder.CreateDefault()
@@ -19,6 +19,7 @@ builder.Services.AddOpenTelemetryTracing(b =>
     .AddHttpClientInstrumentation()
     .AddAspNetCoreInstrumentation();
 });
+
 var MyActivitySource = new ActivitySource(serviceName);
 
 
