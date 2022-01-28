@@ -10,7 +10,12 @@
       "ProjectGuid": "ab0bd381-001c-499c-bc4a-662d1ba2c8dd",
       "DisplayName": "M2",
       "ColorIndex": 1
+    },
+    "62cc2679-8f90-43ba-955f-4da2ebd42924": {
+      "ProjectGuid": "62cc2679-8f90-43ba-955f-4da2ebd42924",
+      "DisplayName": "M2",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 3
 }

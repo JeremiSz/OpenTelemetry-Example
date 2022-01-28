@@ -113,19 +113,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Liam\\.nuget\\packages\\": {}
+    "C:\\Users\\jerem\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\opentelemetry\\src\\M2\\M2.fsproj",
+      "projectUniqueName": "C:\\Extra\\opentelemetry\\src\\M2\\M2.fsproj",
       "projectName": "M2",
-      "projectPath": "E:\\opentelemetry\\src\\M2\\M2.fsproj",
-      "packagesPath": "C:\\Users\\Liam\\.nuget\\packages\\",
-      "outputPath": "E:\\opentelemetry\\src\\M2\\obj\\",
+      "projectPath": "C:\\Extra\\opentelemetry\\src\\M2\\M2.fsproj",
+      "packagesPath": "C:\\Users\\jerem\\.nuget\\packages\\",
+      "outputPath": "C:\\Extra\\opentelemetry\\src\\M2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Liam\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jerem\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

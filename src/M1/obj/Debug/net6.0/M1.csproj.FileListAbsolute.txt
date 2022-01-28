@@ -63,3 +63,11 @@ C:\Extra\opentelemetry\src\M1\obj\Debug\net6.0\M1.genruntimeconfig.cache
 E:\opentelemetry\src\m1\bin\Debug\net6.0\OpenTelemetry.Extensions.Hosting.dll
 E:\opentelemetry\src\m1\bin\Debug\net6.0\OpenTelemetry.Instrumentation.AspNetCore.dll
 E:\opentelemetry\src\m1\bin\Debug\net6.0\OpenTelemetry.Instrumentation.Http.dll
+C:\Extra\opentelemetry\src\M1\bin\Debug\net6.0\OpenTelemetry.Extensions.Hosting.dll
+C:\Extra\opentelemetry\src\M1\bin\Debug\net6.0\OpenTelemetry.Instrumentation.AspNetCore.dll
+C:\Extra\opentelemetry\src\M1\bin\Debug\net6.0\OpenTelemetry.Instrumentation.Http.dll
+C:\Extra\opentelemetry\src\M1\bin\Debug\net6.0\Google.Protobuf.dll
+C:\Extra\opentelemetry\src\M1\bin\Debug\net6.0\Grpc.Core.Api.dll
+C:\Extra\opentelemetry\src\M1\bin\Debug\net6.0\Grpc.Net.Client.dll
+C:\Extra\opentelemetry\src\M1\bin\Debug\net6.0\Grpc.Net.Common.dll
+C:\Extra\opentelemetry\src\M1\bin\Debug\net6.0\OpenTelemetry.Exporter.OpenTelemetryProtocol.dll

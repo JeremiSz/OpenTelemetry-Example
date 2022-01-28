@@ -1,0 +1,36 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+        cors_allowed_origins:
+        - "*"
+
+processors:
+  batch:
+  
+exporters:
+  logging:
+    logLevel: debug
+  #zipkin:
+    #endpoint: "http://zipkin:9411"
+    #insecure: true
+  jaeger:
+    endpoint: jaeger-all-in-one:14250
+    insecure: true
+    #timeout: 500
+    
+extensions:
+  health_check:
+  pprof:
+    endpoint: :1888
+  zpages:
+    endpoint: :55679
+
+service:
+  extensions: [pprof, zpages, health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: []
+      exporters: [logging, jaeger]

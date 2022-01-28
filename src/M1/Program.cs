@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenTelemetryTracing(b =>
 {
     b
-    .AddJaegerExporter()
+    .AddOtlpExporter()
     .AddSource(serviceName)
     .SetResourceBuilder(
         ResourceBuilder.CreateDefault()
