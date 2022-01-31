@@ -6,16 +6,14 @@ receivers:
 
 processors:
   batch:
-  
+
 exporters:
   logging:
     logLevel: debug
-  #zipkin:
-    #endpoint: "http://zipkin:9411"
-    #insecure: true
   jaeger:
-    endpoint: jaeger-all-in-one:14250
-    insecure: true
+    endpoint: jaeger:14250
+    tls:
+      insecure: true
     
 service:
   pipelines:

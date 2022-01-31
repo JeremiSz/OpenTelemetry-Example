@@ -19,6 +19,8 @@ open BagnoDB
 open Microsoft.FSharp.Control
 open System.Threading
 open MongoDB.Bson.Serialization
+open RabbitMQ.Client
+open EasyNetQ
 
 type Student = { 
     _id: BsonObjectId
@@ -46,8 +48,17 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
         |> Connection.database database
         |> Connection.collection collection
 
+    //let bus = RabbitHutch.CreateBus "host=localhost"
+
+    let test (message : string) = 
+        Console.WriteLine("Hello, tested.")
+    
+    //do bus.PubSub.Subscribe<string>("test", test, CancellationToken.None) |> ignore
+
     [<HttpGet>]
     member _.Get() =
+        //let str = "test string"
+        //bus.PubSub.Publish(str)
         "Hit M2 API"
         (* let filter = Filter.empty
         let options = FindOptions<Student>()

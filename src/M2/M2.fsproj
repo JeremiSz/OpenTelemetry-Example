@@ -12,6 +12,7 @@
 
   <ItemGroup>
 	  <PackageReference Include="BagnoDB" Version="0.0.11" />
+	  <PackageReference Include="EasyNetQ" Version="6.3.1" />
 	  <PackageReference Include="MongoDB.Bson" Version="2.14.1" />
 	  <PackageReference Include="MongoDB.Driver" Version="2.14.1" />
 	  <PackageReference Include="MongoDB.FSharp" Version="0.1.0" />

@@ -25,6 +25,7 @@
     <PkgMongoDB_Bson Condition=" '$(PkgMongoDB_Bson)' == '' ">C:\Users\Liam\.nuget\packages\mongodb.bson\2.14.1</PkgMongoDB_Bson>
     <PkgMongoDB_Driver Condition=" '$(PkgMongoDB_Driver)' == '' ">C:\Users\Liam\.nuget\packages\mongodb.driver\2.14.1</PkgMongoDB_Driver>
     <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">C:\Users\Liam\.nuget\packages\fsharp.core\6.0.1</PkgFSharp_Core>
+    <PkgEasyNetQ Condition=" '$(PkgEasyNetQ)' == '' ">C:\Users\Liam\.nuget\packages\easynetq\6.3.1</PkgEasyNetQ>
     <PkgBagnoDB Condition=" '$(PkgBagnoDB)' == '' ">C:\Users\Liam\.nuget\packages\bagnodb\0.0.11</PkgBagnoDB>
   </PropertyGroup>
 </Project>

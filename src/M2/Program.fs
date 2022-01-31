@@ -29,7 +29,7 @@ module Program =
         let builder = WebApplication.CreateBuilder(args)
         builder.Services.AddOpenTelemetryTracing(fun builder ->
             builder
-                .AddJaegerExporter()
+                .AddOtlpExporter()
                 .AddSource(serviceName)
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName,serviceVersion=serviceVersion))
                 .AddHttpClientInstrumentation()

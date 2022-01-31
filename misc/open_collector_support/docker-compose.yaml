@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   collector:
-    image: otel/opentelemetry-collector:latest
+    image: otel/opentelemetry-collector:0.43.0
     volumes:
     - ./otel-local-config.yaml:/otel-local-config.yaml
     entrypoint: ["/otelcol"]
@@ -10,3 +10,4 @@ services:
       LOG_EXPORTER_LOG_LEVEL: "DEBUG"
     ports:
     - "4317:4317"
+    - "16685:16685"
