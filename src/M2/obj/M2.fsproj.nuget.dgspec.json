@@ -95,6 +95,11 @@
               "target": "Package",
               "version": "[1.0.0-rc8, )",
               "generatePathProperty": true
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.2.2, )",
+              "generatePathProperty": true
             }
           },
           "imports": [

@@ -13,6 +13,7 @@
     <SourceRoot Include="C:\Users\Liam\.nuget\packages\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgRabbitMQ_Client Condition=" '$(PkgRabbitMQ_Client)' == '' ">C:\Users\Liam\.nuget\packages\rabbitmq.client\6.2.2</PkgRabbitMQ_Client>
     <PkgOpenTelemetry Condition=" '$(PkgOpenTelemetry)' == '' ">C:\Users\Liam\.nuget\packages\opentelemetry\1.2.0-rc1</PkgOpenTelemetry>
     <PkgOpenTelemetry_Instrumentation_Http Condition=" '$(PkgOpenTelemetry_Instrumentation_Http)' == '' ">C:\Users\Liam\.nuget\packages\opentelemetry.instrumentation.http\1.0.0-rc8</PkgOpenTelemetry_Instrumentation_Http>
     <PkgOpenTelemetry_Instrumentation_AspNetCore Condition=" '$(PkgOpenTelemetry_Instrumentation_AspNetCore)' == '' ">C:\Users\Liam\.nuget\packages\opentelemetry.instrumentation.aspnetcore\1.0.0-rc8</PkgOpenTelemetry_Instrumentation_AspNetCore>

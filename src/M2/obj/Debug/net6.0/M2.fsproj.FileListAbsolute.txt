@@ -106,3 +106,4 @@ E:\opentelemetry\src\M2\obj\Debug\net6.0\M2.fsproj.CopyComplete
 E:\opentelemetry\src\M2\obj\Debug\net6.0\M2.dll
 E:\opentelemetry\src\M2\obj\Debug\net6.0\M2.pdb
 E:\opentelemetry\src\M2\obj\Debug\net6.0\M2.genruntimeconfig.cache
+E:\opentelemetry\src\M2\bin\Debug\net6.0\RabbitMQ.Client.dll
