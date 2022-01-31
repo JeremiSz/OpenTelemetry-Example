@@ -71,3 +71,8 @@ C:\Extra\opentelemetry\src\M1\bin\Debug\net6.0\Grpc.Core.Api.dll
 C:\Extra\opentelemetry\src\M1\bin\Debug\net6.0\Grpc.Net.Client.dll
 C:\Extra\opentelemetry\src\M1\bin\Debug\net6.0\Grpc.Net.Common.dll
 C:\Extra\opentelemetry\src\M1\bin\Debug\net6.0\OpenTelemetry.Exporter.OpenTelemetryProtocol.dll
+E:\opentelemetry\src\M1\bin\Debug\net6.0\Google.Protobuf.dll
+E:\opentelemetry\src\M1\bin\Debug\net6.0\Grpc.Core.Api.dll
+E:\opentelemetry\src\M1\bin\Debug\net6.0\Grpc.Net.Client.dll
+E:\opentelemetry\src\M1\bin\Debug\net6.0\Grpc.Net.Common.dll
+E:\opentelemetry\src\M1\bin\Debug\net6.0\OpenTelemetry.Exporter.OpenTelemetryProtocol.dll

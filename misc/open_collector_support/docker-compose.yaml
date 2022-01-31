@@ -10,4 +10,3 @@ services:
       LOG_EXPORTER_LOG_LEVEL: "DEBUG"
     ports:
     - "4317:4317"
-    - "13133:13133"
