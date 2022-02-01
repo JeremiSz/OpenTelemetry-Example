@@ -14,10 +14,17 @@ exporters:
     endpoint: jaeger:14250
     tls:
       insecure: true
+  otlp:
+    endpoint: "api.honeycomb.io:443"
+    headers:
+      "x-honeycomb-team": "038180b76be29ab0691d9ef3b3ecc138"
+      "x-honeycomb-dataset": "Microservices"
+
+      
     
 service:
   pipelines:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging, jaeger]
+      exporters: [logging, otlp]
