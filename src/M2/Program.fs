@@ -62,7 +62,6 @@ module Program =
             let body = data.Body.ToArray()
             let message = Encoding.UTF8.GetString(body)
             Console.WriteLine message));
-
         let consumeTesult = channel.BasicConsume(queueName,true,consumer)
         Console.WriteLine consumeTesult
 
