@@ -389,6 +389,32 @@
           }
         }
       },
+      "MongoDB.Driver.Core.Extensions.DiagnosticSources/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "MongoDB.Driver.Core": "[2.3.0, 3.0.0)",
+          "System.Diagnostics.DiagnosticSource": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/MongoDB.Driver.Core.Extensions.DiagnosticSources.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/MongoDB.Driver.Core.Extensions.DiagnosticSources.dll": {}
+        }
+      },
+      "MongoDB.Driver.Core.Extensions.OpenTelemetry/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "MongoDB.Driver.Core.Extensions.DiagnosticSources": "1.1.0",
+          "OpenTelemetry": "1.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/MongoDB.Driver.Core.Extensions.OpenTelemetry.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/MongoDB.Driver.Core.Extensions.OpenTelemetry.dll": {}
+        }
+      },
       "MongoDB.FSharp/0.1.0": {
         "type": "package",
         "compile": {
@@ -1090,6 +1116,30 @@
         "runtimes/win/native/snappy64.dll"
       ]
     },
+    "MongoDB.Driver.Core.Extensions.DiagnosticSources/1.1.0": {
+      "sha512": "Y2UvLTLTSWlZUbPVay8Nd4aeup6rf/R2oLQ9YeU/gSNBrqcHGKJJXTkOV1ylI3qXyJqeoNeriI58Chbzn3WZcw==",
+      "type": "package",
+      "path": "mongodb.driver.core.extensions.diagnosticsources/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/MongoDB.Driver.Core.Extensions.DiagnosticSources.dll",
+        "mongodb.driver.core.extensions.diagnosticsources.1.1.0.nupkg.sha512",
+        "mongodb.driver.core.extensions.diagnosticsources.nuspec"
+      ]
+    },
+    "MongoDB.Driver.Core.Extensions.OpenTelemetry/1.0.0": {
+      "sha512": "1JfENWXkKRomU4FcdKW8AiDuRmMGjYCZf9XtWdOPw+tHwczdIKfqSibtyrSSdaoZeXBHDY6PwJF43IgEtQIEaA==",
+      "type": "package",
+      "path": "mongodb.driver.core.extensions.opentelemetry/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/MongoDB.Driver.Core.Extensions.OpenTelemetry.dll",
+        "mongodb.driver.core.extensions.opentelemetry.1.0.0.nupkg.sha512",
+        "mongodb.driver.core.extensions.opentelemetry.nuspec"
+      ]
+    },
     "MongoDB.FSharp/0.1.0": {
       "sha512": "8M2/CAh9hMYxL5OevWkr0IMmYsXQXI4vqTGitG2flrNvdpxrMI11HO4tWwGRx4O+CLUszzP46I2mPTdcbBc0Gw==",
       "type": "package",
@@ -1591,6 +1641,7 @@
       "FSharp.Core >= 6.0.1",
       "MongoDB.Bson >= 2.14.1",
       "MongoDB.Driver >= 2.14.1",
+      "MongoDB.Driver.Core.Extensions.OpenTelemetry >= 1.0.0",
       "MongoDB.FSharp >= 0.1.0",
       "OpenTelemetry >= 1.2.0-rc1",
       "OpenTelemetry.Exporter.Console >= 1.2.0-rc1",
@@ -1660,6 +1711,11 @@
           "MongoDB.Driver": {
             "target": "Package",
             "version": "[2.14.1, )",
+            "generatePathProperty": true
+          },
+          "MongoDB.Driver.Core.Extensions.OpenTelemetry": {
+            "target": "Package",
+            "version": "[1.0.0, )",
             "generatePathProperty": true
           },
           "MongoDB.FSharp": {

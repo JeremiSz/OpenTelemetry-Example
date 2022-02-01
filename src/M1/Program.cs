@@ -1,6 +1,4 @@
-using M1.Controllers;
 using System.Diagnostics;
-using OpenTelemetry;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
 

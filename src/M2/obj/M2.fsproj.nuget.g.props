@@ -23,6 +23,7 @@
     <PkgOpenTelemetry_Exporter_Console Condition=" '$(PkgOpenTelemetry_Exporter_Console)' == '' ">C:\Users\jerem\.nuget\packages\opentelemetry.exporter.console\1.2.0-rc1</PkgOpenTelemetry_Exporter_Console>
     <PkgMongoDB_FSharp Condition=" '$(PkgMongoDB_FSharp)' == '' ">C:\Users\jerem\.nuget\packages\mongodb.fsharp\0.1.0</PkgMongoDB_FSharp>
     <PkgMongoDB_Bson Condition=" '$(PkgMongoDB_Bson)' == '' ">C:\Users\jerem\.nuget\packages\mongodb.bson\2.14.1</PkgMongoDB_Bson>
+    <PkgMongoDB_Driver_Core_Extensions_OpenTelemetry Condition=" '$(PkgMongoDB_Driver_Core_Extensions_OpenTelemetry)' == '' ">C:\Users\jerem\.nuget\packages\mongodb.driver.core.extensions.opentelemetry\1.0.0</PkgMongoDB_Driver_Core_Extensions_OpenTelemetry>
     <PkgMongoDB_Driver Condition=" '$(PkgMongoDB_Driver)' == '' ">C:\Users\jerem\.nuget\packages\mongodb.driver\2.14.1</PkgMongoDB_Driver>
     <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">C:\Users\jerem\.nuget\packages\fsharp.core\6.0.1</PkgFSharp_Core>
     <PkgEasyNetQ Condition=" '$(PkgEasyNetQ)' == '' ">C:\Users\jerem\.nuget\packages\easynetq\6.3.1</PkgEasyNetQ>

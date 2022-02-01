@@ -29,11 +29,12 @@ module Program =
         let builder = WebApplication.CreateBuilder(args)
         builder.Services.AddOpenTelemetryTracing(fun builder ->
             builder
-                .AddOtlpExporter()
+                .AddJaegerExporter()
                 .AddSource(serviceName)
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName,serviceVersion=serviceVersion))
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation()
+                .AddMongoDBInstrumentation()
             |> ignore
         )
         builder.Services.AddTransient<IActivityService, ActivityService>()

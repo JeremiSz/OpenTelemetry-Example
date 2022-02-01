@@ -13,6 +13,7 @@
           "FSharp.Core": "6.0.1",
           "MongoDB.Bson": "2.14.1",
           "MongoDB.Driver": "2.14.1",
+          "MongoDB.Driver.Core.Extensions.OpenTelemetry": "1.0.0",
           "MongoDB.FSharp": "0.1.0",
           "OpenTelemetry": "1.2.0-rc1",
           "OpenTelemetry.Exporter.Console": "1.2.0-rc1",
@@ -297,6 +298,30 @@
             "rid": "win",
             "assetType": "native",
             "fileVersion": "1.1.1.7"
+          }
+        }
+      },
+      "MongoDB.Driver.Core.Extensions.DiagnosticSources/1.1.0": {
+        "dependencies": {
+          "MongoDB.Driver.Core": "2.14.1",
+          "System.Diagnostics.DiagnosticSource": "6.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/MongoDB.Driver.Core.Extensions.DiagnosticSources.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        }
+      },
+      "MongoDB.Driver.Core.Extensions.OpenTelemetry/1.0.0": {
+        "dependencies": {
+          "MongoDB.Driver.Core.Extensions.DiagnosticSources": "1.1.0",
+          "OpenTelemetry": "1.2.0-rc1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/MongoDB.Driver.Core.Extensions.OpenTelemetry.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -646,6 +671,20 @@
       "sha512": "sha512-m8K0jxvyAezHO/Fyj+ooblMzkIE02qBXTqRWycIGC31tV5Y43mTuwTE6J07zyEo+sI1O25Ak8hwJAmFfKJ5low==",
       "path": "mongodb.driver.core/2.14.1",
       "hashPath": "mongodb.driver.core.2.14.1.nupkg.sha512"
+    },
+    "MongoDB.Driver.Core.Extensions.DiagnosticSources/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Y2UvLTLTSWlZUbPVay8Nd4aeup6rf/R2oLQ9YeU/gSNBrqcHGKJJXTkOV1ylI3qXyJqeoNeriI58Chbzn3WZcw==",
+      "path": "mongodb.driver.core.extensions.diagnosticsources/1.1.0",
+      "hashPath": "mongodb.driver.core.extensions.diagnosticsources.1.1.0.nupkg.sha512"
+    },
+    "MongoDB.Driver.Core.Extensions.OpenTelemetry/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1JfENWXkKRomU4FcdKW8AiDuRmMGjYCZf9XtWdOPw+tHwczdIKfqSibtyrSSdaoZeXBHDY6PwJF43IgEtQIEaA==",
+      "path": "mongodb.driver.core.extensions.opentelemetry/1.0.0",
+      "hashPath": "mongodb.driver.core.extensions.opentelemetry.1.0.0.nupkg.sha512"
     },
     "MongoDB.FSharp/0.1.0": {
       "type": "package",
