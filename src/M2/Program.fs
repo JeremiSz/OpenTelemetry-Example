@@ -1,22 +1,15 @@
 namespace M2
 #nowarn "20"
 open System
-open System.Collections.Generic
-open System.IO
-open System.Linq
-open System.Threading.Tasks
-open Microsoft.AspNetCore
+open System.Text
 open Microsoft.AspNetCore.Builder
-open Microsoft.AspNetCore.Hosting
-open Microsoft.AspNetCore.HttpsPolicy
-open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
-open Microsoft.Extensions.Logging
-open OpenTelemetry
 open OpenTelemetry.Trace
 open OpenTelemetry.Resources
 open TraceProvider
+open RabbitMQ.Client
+open RabbitMQ.Client.Events
 
 module Program =
     let exitCode = 0
@@ -46,8 +39,31 @@ module Program =
         app.UseHttpsRedirection()
 
         app.UseAuthorization()
+
+        let factory = new ConnectionFactory()
+        do factory.HostName <- "localhost"
+        //do factory.UserName <- "consumer"
+        let exchangeName = "stonks"
+        let queueName = "testing"
+        let routingKey = "RabbitMQ"
+
         app.MapControllers()
 
         app.Run()
+
+        let connection = factory.CreateConnection()
+        let channel = connection.CreateModel()
+        channel.ExchangeDeclare(exchangeName,ExchangeType.Fanout,false,false,null);
+        do channel.QueueBind(queueName,exchangeName,routingKey,null);
+        //do channel.QueueDeclare(queueName,false,false,false,null) |> ignore
+        let consumer = new EventingBasicConsumer(channel)
+
+        do consumer.Received.AddHandler(new EventHandler<BasicDeliverEventArgs>(fun sender (data:BasicDeliverEventArgs) -> 
+            let body = data.Body.ToArray()
+            let message = Encoding.UTF8.GetString(body)
+            Console.WriteLine message));
+
+        let consumeTesult = channel.BasicConsume(queueName,true,consumer)
+        Console.WriteLine consumeTesult
 
         exitCode
