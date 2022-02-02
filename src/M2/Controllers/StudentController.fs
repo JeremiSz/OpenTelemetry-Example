@@ -20,7 +20,7 @@ type Student =
         [<BsonRepresentation(BsonType.ObjectId)>] 
         _id : string
         [<BsonElement("name")>] 
-        name:string
+        name : string
     }
 
 [<ApiController>]
@@ -28,14 +28,13 @@ type Student =
 type StudentController (logger : ILogger<StudentController>, traceProvider : IActivityService) =
     inherit ControllerBase()
 
-
-    let testFunction (data :BasicDeliverEventArgs) = 
+    (* let testFunction (data :BasicDeliverEventArgs) = 
         let body = data.Body.ToArray();
         let message = Encoding.UTF8.GetString(body);
-        Console.WriteLine(" [x] Received {0}", message);
+        Console.WriteLine(" [x] Received {0}", message); *)
 
     //rabbitMQ setup
-    let factory = new ConnectionFactory()
+   (* let factory = new ConnectionFactory()
     do factory.HostName <- "localhost"
     //do factory.UserName <- "producer"
     let queueName = "testing"
@@ -51,12 +50,12 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
         let message = Encoding.UTF8.GetString(body)
         printfn "%s %s" "consumed" message));
 
-    let consumeTesult = channel.BasicConsume(queueName,true,consumer) |> ignore;
+    let consumeTesult = channel.BasicConsume(queueName,true,consumer) |> ignore; *)
 
     //mongo setup
-    let connectionString = "mongodb+srv://123:123@mongocult.3pgkf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-    let databaseName = "testing"
-    let collectionName = "gnitset"
+    let connectionString = "mongodb://localhost:27017"
+    let databaseName = "studentDB"
+    let collectionName = "students"
     let setting = MongoClientSettings.FromConnectionString(connectionString)
     let makeClusterBuilder(clusterbuilder:ClusterBuilder)= 
         let DAES = new DiagnosticsActivityEventSubscriber()
@@ -68,25 +67,21 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
     let client = new MongoClient(setting)
     let database = client.GetDatabase(databaseName)
     
-
-    
-
     [<HttpGet>]
     member _.Get() =
-        
-        let connection = factory.CreateConnection()
+       (* let connection = factory.CreateConnection()
         let channel = connection.CreateModel()
         channel.QueueDeclare(queueName,false,false,false,null) |> ignore
         let message = "we made a queue. Well done us"
         let body = Encoding.UTF8.GetBytes(message)
-        channel.BasicPublish("",routingKey,null,body)
-        (*async{
+        channel.BasicPublish("",routingKey,null,body) *)
+        async{
             let collection = database.GetCollection(collectionName)
             let task = collection.Find<Student>(FilterDefinition.Empty).ToListAsync()
             let! list = Async.AwaitTask(task)
             return list
-        }*)
-        "Published"
+        }
+        //"Published"
 
     
 

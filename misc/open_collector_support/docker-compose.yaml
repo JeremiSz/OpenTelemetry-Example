@@ -1,9 +1,14 @@
 version: '3.7'
+networks:
+  my-net:
+    external: true
 services:
   collector:
     image: otel/opentelemetry-collector:0.43.0
     volumes:
     - ./otel-local-config.yaml:/otel-local-config.yaml
+    networks:
+    - my-net
     entrypoint: ["/otelcol"]
     command: ["--config", "/otel-local-config.yaml"]
     environment:

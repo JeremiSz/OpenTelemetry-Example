@@ -1,6 +1,8 @@
 namespace M2
+
 #nowarn "20"
 open System
+open System.Threading
 open System.Text
 open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.DependencyInjection
@@ -10,6 +12,7 @@ open OpenTelemetry.Resources
 open TraceProvider
 open RabbitMQ.Client
 open RabbitMQ.Client.Events
+open Rabbit.Hello
 
 module Program =
     let exitCode = 0
@@ -22,7 +25,7 @@ module Program =
         let builder = WebApplication.CreateBuilder(args)
         builder.Services.AddOpenTelemetryTracing(fun builder ->
             builder
-                .AddJaegerExporter()
+                .AddOtlpExporter()
                 .AddSource(serviceName)
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName,serviceVersion=serviceVersion))
                 .AddHttpClientInstrumentation()
@@ -33,36 +36,30 @@ module Program =
         builder.Services.AddTransient<IActivityService, ActivityService>()
         builder.Services.AddControllers()
         
-
         let app = builder.Build()
 
         app.UseHttpsRedirection()
 
         app.UseAuthorization()
 
-        let factory = new ConnectionFactory()
-        do factory.HostName <- "localhost"
-        //do factory.UserName <- "consumer"
-        let exchangeName = "stonks"
-        let queueName = "testing"
-        let routingKey = "RabbitMQ"
+        let host = "localhost"
+        let queue = "data_stream"
+        let routingKey = "data_stream"
+
+        (*async {
+            let token = new CancellationTokenSource()
+            token.CancelAfter 5000
+    
+            seq { 
+              (producer host queue routingKey token); 
+              (consumer "1" host queue token); 
+              (consumer "2" host queue token) } 
+            |> Async.Parallel
+            |> Async.RunSynchronously |> ignore
+          } |> Async.RunSynchronously *)
 
         app.MapControllers()
 
         app.Run()
-
-        let connection = factory.CreateConnection()
-        let channel = connection.CreateModel()
-        channel.ExchangeDeclare(exchangeName,ExchangeType.Fanout,false,false,null);
-        do channel.QueueBind(queueName,exchangeName,routingKey,null);
-        //do channel.QueueDeclare(queueName,false,false,false,null) |> ignore
-        let consumer = new EventingBasicConsumer(channel)
-
-        do consumer.Received.AddHandler(new EventHandler<BasicDeliverEventArgs>(fun sender (data:BasicDeliverEventArgs) -> 
-            let body = data.Body.ToArray()
-            let message = Encoding.UTF8.GetString(body)
-            Console.WriteLine message));
-        let consumeTesult = channel.BasicConsume(queueName,true,consumer)
-        Console.WriteLine consumeTesult
 
         exitCode
