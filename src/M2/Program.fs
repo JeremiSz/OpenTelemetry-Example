@@ -10,26 +10,24 @@ open Microsoft.Extensions.Hosting
 open OpenTelemetry.Trace
 open OpenTelemetry.Resources
 open TraceProvider
-open RabbitMQ.Client
 open RabbitMQ.Client.Events
 open Helpers.RabbitHelper
 open Helpers.MongoHelper
 open MongoDB.Bson
+open OpenTelemetry.Context.Propagation
+open RabbitMQ.Client
+open System.Collections
+open System.Linq
+open System.Collections.Generic
+open OpenTelemetry
+
+
 
 module Program =
     let exitCode = 0
     let serviceName = "CCS.OpenTelemetry.M2";
     let serviceVersion = "1.0.0";
-
-    let dbhandler sender (data:BasicDeliverEventArgs) =
-        let body = data.Body.ToArray()
-        let message = Encoding.UTF8.GetString(body)
-        
-        new BsonElement("name",message)
-        |> (new BsonDocument()).Add
-        |> (getCollection workflowCollectionName).InsertOne
-    
-    
+    let Propagator : TextMapPropagator = new TraceContextPropagator()
 
     [<EntryPoint>]
     let main args =
@@ -43,8 +41,36 @@ module Program =
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation()
                 .AddMongoDBInstrumentation()
+         
             |> ignore
         )
+
+        let ExtractTraceContextFromBasicProperties (props : IBasicProperties) (key : string) : IEnumerable<string> =
+            let output = Enumerable.Empty<string>()
+            try
+                let isValid,result = props.Headers.TryGetValue key
+                if isValid then
+                    result.ToString()
+                    |> output.Append
+                    |> ignore
+            
+            with 
+            | ex -> Console.WriteLine($"Failed to extract trace context: {ex}")
+
+            output
+
+        let dbhandler sender (data:BasicDeliverEventArgs) =
+            Baggage.Current = Propagator.Extract(Unchecked.defaultof<PropagationContext>,data.BasicProperties, ExtractTraceContextFromBasicProperties).Baggage
+            let body = data.Body.ToArray()
+            let message = Encoding.UTF8.GetString(body)
+            
+            new BsonElement("name",message)
+            |> (new BsonDocument()).Add
+            |> (getCollection workflowCollectionName).InsertOne
+
+        
+        
+
         builder.Services.AddTransient<IActivityService, ActivityService>()
         builder.Services.AddControllers()
         
@@ -61,7 +87,7 @@ module Program =
         let token = new CancellationTokenSource()   
               
         //start consumers
-        Async.Start(consumer Workflow_QUEUE dbhandler token);
+        Async.Start(consumer (getChannel()) Workflow_QUEUE dbhandler token);
 
         app.Run()
 
