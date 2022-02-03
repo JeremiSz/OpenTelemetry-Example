@@ -5,28 +5,28 @@
     <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
     <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
     <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
-    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\Liam\.nuget\packages\</NuGetPackageFolders>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\jerem\.nuget\packages\</NuGetPackageFolders>
     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
     <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.0.1</NuGetToolVersion>
   </PropertyGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <SourceRoot Include="C:\Users\Liam\.nuget\packages\" />
+    <SourceRoot Include="C:\Users\jerem\.nuget\packages\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgRabbitMQ_Client Condition=" '$(PkgRabbitMQ_Client)' == '' ">C:\Users\Liam\.nuget\packages\rabbitmq.client\6.2.2</PkgRabbitMQ_Client>
-    <PkgOpenTelemetry Condition=" '$(PkgOpenTelemetry)' == '' ">C:\Users\Liam\.nuget\packages\opentelemetry\1.2.0-rc1</PkgOpenTelemetry>
-    <PkgOpenTelemetry_Instrumentation_Http Condition=" '$(PkgOpenTelemetry_Instrumentation_Http)' == '' ">C:\Users\Liam\.nuget\packages\opentelemetry.instrumentation.http\1.0.0-rc8</PkgOpenTelemetry_Instrumentation_Http>
-    <PkgOpenTelemetry_Instrumentation_AspNetCore Condition=" '$(PkgOpenTelemetry_Instrumentation_AspNetCore)' == '' ">C:\Users\Liam\.nuget\packages\opentelemetry.instrumentation.aspnetcore\1.0.0-rc8</PkgOpenTelemetry_Instrumentation_AspNetCore>
-    <PkgOpenTelemetry_Extensions_Hosting Condition=" '$(PkgOpenTelemetry_Extensions_Hosting)' == '' ">C:\Users\Liam\.nuget\packages\opentelemetry.extensions.hosting\1.0.0-rc8</PkgOpenTelemetry_Extensions_Hosting>
-    <PkgOpenTelemetry_Exporter_OpenTelemetryProtocol Condition=" '$(PkgOpenTelemetry_Exporter_OpenTelemetryProtocol)' == '' ">C:\Users\Liam\.nuget\packages\opentelemetry.exporter.opentelemetryprotocol\1.2.0-rc1</PkgOpenTelemetry_Exporter_OpenTelemetryProtocol>
-    <PkgOpenTelemetry_Exporter_Jaeger Condition=" '$(PkgOpenTelemetry_Exporter_Jaeger)' == '' ">C:\Users\Liam\.nuget\packages\opentelemetry.exporter.jaeger\1.2.0-rc1</PkgOpenTelemetry_Exporter_Jaeger>
-    <PkgOpenTelemetry_Exporter_Console Condition=" '$(PkgOpenTelemetry_Exporter_Console)' == '' ">C:\Users\Liam\.nuget\packages\opentelemetry.exporter.console\1.2.0-rc1</PkgOpenTelemetry_Exporter_Console>
-    <PkgMongoDB_FSharp Condition=" '$(PkgMongoDB_FSharp)' == '' ">C:\Users\Liam\.nuget\packages\mongodb.fsharp\0.1.0</PkgMongoDB_FSharp>
-    <PkgMongoDB_Bson Condition=" '$(PkgMongoDB_Bson)' == '' ">C:\Users\Liam\.nuget\packages\mongodb.bson\2.14.1</PkgMongoDB_Bson>
-    <PkgMongoDB_Driver_Core_Extensions_OpenTelemetry Condition=" '$(PkgMongoDB_Driver_Core_Extensions_OpenTelemetry)' == '' ">C:\Users\Liam\.nuget\packages\mongodb.driver.core.extensions.opentelemetry\1.0.0</PkgMongoDB_Driver_Core_Extensions_OpenTelemetry>
-    <PkgMongoDB_Driver Condition=" '$(PkgMongoDB_Driver)' == '' ">C:\Users\Liam\.nuget\packages\mongodb.driver\2.14.1</PkgMongoDB_Driver>
-    <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">C:\Users\Liam\.nuget\packages\fsharp.core\6.0.1</PkgFSharp_Core>
-    <PkgEasyNetQ Condition=" '$(PkgEasyNetQ)' == '' ">C:\Users\Liam\.nuget\packages\easynetq\6.3.1</PkgEasyNetQ>
-    <PkgBagnoDB Condition=" '$(PkgBagnoDB)' == '' ">C:\Users\Liam\.nuget\packages\bagnodb\0.0.11</PkgBagnoDB>
+    <PkgRabbitMQ_Client Condition=" '$(PkgRabbitMQ_Client)' == '' ">C:\Users\jerem\.nuget\packages\rabbitmq.client\6.2.2</PkgRabbitMQ_Client>
+    <PkgOpenTelemetry Condition=" '$(PkgOpenTelemetry)' == '' ">C:\Users\jerem\.nuget\packages\opentelemetry\1.2.0-rc1</PkgOpenTelemetry>
+    <PkgOpenTelemetry_Instrumentation_Http Condition=" '$(PkgOpenTelemetry_Instrumentation_Http)' == '' ">C:\Users\jerem\.nuget\packages\opentelemetry.instrumentation.http\1.0.0-rc8</PkgOpenTelemetry_Instrumentation_Http>
+    <PkgOpenTelemetry_Instrumentation_AspNetCore Condition=" '$(PkgOpenTelemetry_Instrumentation_AspNetCore)' == '' ">C:\Users\jerem\.nuget\packages\opentelemetry.instrumentation.aspnetcore\1.0.0-rc8</PkgOpenTelemetry_Instrumentation_AspNetCore>
+    <PkgOpenTelemetry_Extensions_Hosting Condition=" '$(PkgOpenTelemetry_Extensions_Hosting)' == '' ">C:\Users\jerem\.nuget\packages\opentelemetry.extensions.hosting\1.0.0-rc8</PkgOpenTelemetry_Extensions_Hosting>
+    <PkgOpenTelemetry_Exporter_OpenTelemetryProtocol Condition=" '$(PkgOpenTelemetry_Exporter_OpenTelemetryProtocol)' == '' ">C:\Users\jerem\.nuget\packages\opentelemetry.exporter.opentelemetryprotocol\1.2.0-rc1</PkgOpenTelemetry_Exporter_OpenTelemetryProtocol>
+    <PkgOpenTelemetry_Exporter_Jaeger Condition=" '$(PkgOpenTelemetry_Exporter_Jaeger)' == '' ">C:\Users\jerem\.nuget\packages\opentelemetry.exporter.jaeger\1.2.0-rc1</PkgOpenTelemetry_Exporter_Jaeger>
+    <PkgOpenTelemetry_Exporter_Console Condition=" '$(PkgOpenTelemetry_Exporter_Console)' == '' ">C:\Users\jerem\.nuget\packages\opentelemetry.exporter.console\1.2.0-rc1</PkgOpenTelemetry_Exporter_Console>
+    <PkgMongoDB_FSharp Condition=" '$(PkgMongoDB_FSharp)' == '' ">C:\Users\jerem\.nuget\packages\mongodb.fsharp\0.1.0</PkgMongoDB_FSharp>
+    <PkgMongoDB_Bson Condition=" '$(PkgMongoDB_Bson)' == '' ">C:\Users\jerem\.nuget\packages\mongodb.bson\2.14.1</PkgMongoDB_Bson>
+    <PkgMongoDB_Driver_Core_Extensions_OpenTelemetry Condition=" '$(PkgMongoDB_Driver_Core_Extensions_OpenTelemetry)' == '' ">C:\Users\jerem\.nuget\packages\mongodb.driver.core.extensions.opentelemetry\1.0.0</PkgMongoDB_Driver_Core_Extensions_OpenTelemetry>
+    <PkgMongoDB_Driver Condition=" '$(PkgMongoDB_Driver)' == '' ">C:\Users\jerem\.nuget\packages\mongodb.driver\2.14.1</PkgMongoDB_Driver>
+    <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">C:\Users\jerem\.nuget\packages\fsharp.core\6.0.1</PkgFSharp_Core>
+    <PkgEasyNetQ Condition=" '$(PkgEasyNetQ)' == '' ">C:\Users\jerem\.nuget\packages\easynetq\6.3.1</PkgEasyNetQ>
+    <PkgBagnoDB Condition=" '$(PkgBagnoDB)' == '' ">C:\Users\jerem\.nuget\packages\bagnodb\0.0.11</PkgBagnoDB>
   </PropertyGroup>
 </Project>

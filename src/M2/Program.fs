@@ -12,12 +12,24 @@ open OpenTelemetry.Resources
 open TraceProvider
 open RabbitMQ.Client
 open RabbitMQ.Client.Events
-open Rabbit.Hello
+open Helpers.RabbitHelper
+open Helpers.MongoHelper
+open MongoDB.Bson
 
 module Program =
     let exitCode = 0
     let serviceName = "CCS.OpenTelemetry.M2";
     let serviceVersion = "1.0.0";
+
+    let dbhandler sender (data:BasicDeliverEventArgs) =
+        let body = data.Body.ToArray()
+        let message = Encoding.UTF8.GetString(body)
+        
+        new BsonElement("name",message)
+        |> (new BsonDocument()).Add
+        |> (getCollection workflowCollectionName).InsertOne
+    
+    
 
     [<EntryPoint>]
     let main args =
@@ -42,24 +54,17 @@ module Program =
 
         app.UseAuthorization()
 
-        let host = "localhost"
-        let queue = "data_stream"
-        let routingKey = "data_stream"
-
-        (*async {
-            let token = new CancellationTokenSource()
-            token.CancelAfter 5000
-    
-            seq { 
-              (producer host queue routingKey token); 
-              (consumer "1" host queue token); 
-              (consumer "2" host queue token) } 
-            |> Async.Parallel
-            |> Async.RunSynchronously |> ignore
-          } |> Async.RunSynchronously *)
-
+        
         app.MapControllers()
 
+
+        let token = new CancellationTokenSource()   
+              
+        //start consumers
+        Async.Start(consumer Workflow_QUEUE dbhandler token);
+
         app.Run()
+
+        token.Cancel()
 
         exitCode

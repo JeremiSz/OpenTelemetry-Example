@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Suji\Producer.fs" />
+    <Compile Include="helper\MongoHelper.fs" />
+    <Compile Include="helper\RabbitHelper.fs" />
     <Compile Include="ActivityProvider.fs" />
     <Compile Include="Controllers\StudentController.fs" />
     <Compile Include="Program.fs" />
