@@ -18,10 +18,10 @@ module RabbitHelper =
     let getChannel() =
         connection.CreateModel();
 
-    let producer (channel:IModel) (publisher: unit -> byte[]) queue  = async {
+    let producer (channel:IModel) (publisher: unit -> byte[] * IBasicProperties) queue  = async {
         channel.QueueDeclare(queue = queue, durable = false, exclusive = false, autoDelete = false, arguments = null) |> ignore
-
-        channel.BasicPublish("", queue, null, publisher())
+        let body, basicProperties = publisher()
+        channel.BasicPublish("", queue, basicProperties,body )
     }
 
     let consumer (channel:IModel) queue (handler :obj -> BasicDeliverEventArgs -> unit) (token: CancellationTokenSource) = async {

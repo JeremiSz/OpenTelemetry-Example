@@ -20,6 +20,7 @@ open System.Collections
 open System.Linq
 open System.Collections.Generic
 open OpenTelemetry
+open System.Diagnostics
 
 
 
@@ -28,6 +29,7 @@ module Program =
     let serviceName = "CCS.OpenTelemetry.M2";
     let serviceVersion = "1.0.0";
     let Propagator : TextMapPropagator = new TraceContextPropagator()
+    let ActivitySource = new ActivitySource(serviceName)
 
     [<EntryPoint>]
     let main args =
@@ -60,7 +62,10 @@ module Program =
             output
 
         let dbhandler sender (data:BasicDeliverEventArgs) =
-            Baggage.Current = Propagator.Extract(Unchecked.defaultof<PropagationContext>,data.BasicProperties, ExtractTraceContextFromBasicProperties).Baggage
+            let propagrationContext = Propagator.Extract(Unchecked.defaultof<PropagationContext>,data.BasicProperties, ExtractTraceContextFromBasicProperties)
+            Baggage.Current <- propagrationContext.Baggage
+
+            let activity = ActivitySource.StartActivity("inserting now",ActivityKind.Consumer,propagrationContext.ActivityContext)
             let body = data.Body.ToArray()
             let message = Encoding.UTF8.GetString(body)
             

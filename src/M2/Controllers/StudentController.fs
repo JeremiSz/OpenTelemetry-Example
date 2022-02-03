@@ -57,21 +57,20 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
                     if props.Headers = null then 
                         props.Headers <- (new Dictionary<string, obj>())
 
-                    props.Headers[key] = value |> ignore
+                    props.Headers[key] <- value
                 with
                 | ex -> logger.LogError(ex, "Failed to inject trace context.") |> ignore
   
             let baggage = Baggage.Current;
             let propContext = new PropagationContext(contextToInject,baggage);
             Propagator.Inject(propContext,props,InjectTraceContextIntoBasicProperties)
-            Prop
             
             let rand = Random()
             
             let message = sprintf "%f" (rand.NextDouble())
             let body = Encoding.UTF8.GetBytes(message)
             printfn "publish     : %s" message
-            body
+            (body,props)
         Async.RunSynchronously (producer (getChannel()) publisher Workflow_QUEUE)
         "sent"
 
