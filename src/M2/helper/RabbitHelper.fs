@@ -1,47 +1,81 @@
 ﻿namespace Helpers
 
 open System
-open System.Text
 open System.Threading
+open System.Diagnostics;
+open System.Linq;
+open System.Text;
 open RabbitMQ.Client
 open RabbitMQ.Client.Events
+open OpenTelemetry.Context.Propagation
+open OpenTelemetry
+open MongoDB.Bson
+open System.Collections.Generic
+open MongoHelper
+
 
 module RabbitHelper =
     let private HOST = "localhost"
+    let private PORT = 5672;
     let Student_QUEUE = "data_stream"
-    //let Strudent_ROUTING_KEY = "data_stream"
     let Workflow_QUEUE = "students"
-    //let Workflow_ROUTING_KEY = "stu dents"
-
-    let producer queue  = async {
+    let serviceName = "CCS.OpenTelemetry.M2";
+    let Propagator : TextMapPropagator = new TraceContextPropagator()
+    let ActivitySource = new ActivitySource(serviceName)
+    let private connection = 
         let factory = ConnectionFactory()
         factory.HostName <- HOST
-        use connection = factory.CreateConnection()
-        use channel = connection.CreateModel()
-        let result = channel.QueueDeclare(queue = queue, durable = false, exclusive = false, autoDelete = false, arguments = null)
+        factory.Port <- PORT
+        factory.CreateConnection()
 
-        let rand = Random()
-        
-        let message = sprintf "%f" (rand.NextDouble())
-        let body = Encoding.UTF8.GetBytes(message)
-        printfn "publish     : %s" message
-        channel.BasicPublish(exchange = "", routingKey = queue, basicProperties = null, body = body)
+    let getChannel() =
+        connection.CreateModel();
+
+    let producer (channel:IModel) (publisher: unit -> byte[] * IBasicProperties) queue  = async {
+        do channel.QueueDeclare(queue, false, false, false, null) |> ignore
+        let body, basicProperties = publisher()
+        channel.BasicPublish("", queue, basicProperties,body )
     }
 
-    let consumer queue (handler :obj -> BasicDeliverEventArgs -> unit) (token: CancellationTokenSource) = async {
-        let factory = ConnectionFactory()
-        factory.HostName <- HOST
-        use connection = factory.CreateConnection()
-        use channel = connection.CreateModel()
-        let result = channel.QueueDeclare(queue = queue, durable = false, exclusive = false, autoDelete = false, arguments = null)
+    let consumer (channel:IModel) queue (handler :obj -> BasicDeliverEventArgs -> unit) (token: CancellationTokenSource) = async {
+        do channel.QueueDeclare(queue, false, false, false, null) |> ignore
 
         let consumer = EventingBasicConsumer(channel)
         consumer.Received.AddHandler(new EventHandler<BasicDeliverEventArgs>(handler))
 
-        let consumeResult = channel.BasicConsume(queue = queue, autoAck = true, consumer = consumer)
-
+        do channel.BasicConsume(queue, true, consumer) |> ignore
 
         while not token.IsCancellationRequested do
             Thread.Sleep(500)
     }
+
+    let ExtractTraceContextFromBasicProperties (props : IBasicProperties) (key : string) : IEnumerable<string> =
+        let mutable output = Enumerable.Empty<string>()
+        
+        try
+            let isValid,result = props.Headers.TryGetValue key
+            if isValid then
+                let array = [| Encoding.UTF8.GetString(result :?> byte[]) |]
+                output <- array
+        with 
+        | ex -> Console.WriteLine($"Failed to extract trace context: {ex}")
+
+       
+        output
+
+    let dbhandler sender (data:BasicDeliverEventArgs) =
+        let propagrationContext = Propagator.Extract(Unchecked.defaultof<PropagationContext>, data.BasicProperties, ExtractTraceContextFromBasicProperties)
+        Baggage.Current <- propagrationContext.Baggage
+        
+        use activity = ActivitySource.StartActivity(serviceName,ActivityKind.Consumer,propagrationContext.ActivityContext)
+        activity.SetTag("messaging.system", "rabbitmq") |> ignore
+        activity.SetTag("messaging.destination_kind", "queue") |> ignore
+        activity.SetTag("messaging.rabbitmq.queue", "sample") |> ignore
+        
+        let body = data.Body.ToArray()
+        let message = Encoding.UTF8.GetString(body)
+
+        new BsonElement("name",message)
+        |> (new BsonDocument()).Add
+        |> (getCollection workflowCollectionName).InsertOne
 

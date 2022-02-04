@@ -34,5 +34,4 @@ module MongoHelper =
    
 
     let getCollection collection  =
-        
         database.GetCollection(collection);

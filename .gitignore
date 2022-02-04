@@ -348,3 +348,6 @@ obj/
 *.suo
 ide/.vs/
 misc/client_tool/.vs/
+
+./src/M2/bin/
+./src/M2/obj/

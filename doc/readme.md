@@ -1,13 +1,26 @@
+# Concepts
+
+* Traces - A tree of spans representing the lifetime of a call to a service.
+* Span - Starting time of service and full duration. Has a SpanID.
+* Tags - Can be used to provide metadata on a specific trace. Appears in final output along with span.
+* Baggage - Metadata passed from parent to child, does not get output at the end.
+
 # Traces
 
-* A trace is the representation of the lifetime of a call to a service.
 * Traces can have parent/child relationships with each other.
 * Traces are connected when they have the same TraceID.
 * A trace consists of:
-    * TraceID
-    * Span - Starting time of service and full duration.
-    * Tags - Can be used to provide metadata on a specific trace. Appears in final output along with span.
-    * Baggage - Metadata passed from parent to child, does not get output at the end.
+    * TraceID - Identifies the trace.
+    * Span(s)
+    * Services
+    * Depth
+
+# Terminology
+
+| OpenTelemetry | .NET 6.0 |
+| :--- | :--- |
+| Tracer | ActivitySource |
+| Span | Activity |
 
 # OpenTelemetry Collector
 

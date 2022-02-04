@@ -44,6 +44,15 @@ namespace M1.Controllers
         [HttpPost]
         public string post()
         {
+            var activity = Activity.Current;
+            activity?.SetTag("Post", "Post request made to M1.");
+
+            helper();
+            
+            HttpClient client = new HttpClient();
+            HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7225/backend");
+            HttpResponseMessage httpResponse = client.Send(httpRequest); 
+            
             return "post students";
         }
 
