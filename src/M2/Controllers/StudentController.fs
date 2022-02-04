@@ -2,7 +2,6 @@
 
 open System
 open System.Text
-open System.Threading
 open Microsoft.AspNetCore.Mvc
 open Microsoft.Extensions.Logging
 open TraceProvider
@@ -14,8 +13,6 @@ open System.Diagnostics
 open OpenTelemetry
 open RabbitMQ.Client
 open System.Collections.Generic
-open System.Collections
-
 
 [<ApiController>]
 [<Route("backend")>]
@@ -23,7 +20,6 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
     inherit ControllerBase()
 
     let Propagator : TextMapPropagator = Propagators.DefaultTextMapPropagator;
-    
     
     [<HttpGet>]
     member _.Get() =
@@ -37,17 +33,14 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
     [<HttpPost>]
     member _.Post() =
         let publisher() =
-            let activity = traceProvider.CreateActivity ($"{Workflow_QUEUE} send",ActivityKind.Producer)
-
+            use activity = traceProvider.CreateActivity($"{Workflow_QUEUE} send",ActivityKind.Producer)
             let channel = getChannel()
             let props = channel.CreateBasicProperties()
 
             let contextToInject =
                 if activity <> null then
-                    Console.WriteLine "has activity context"
                     activity.Context
                 elif Activity.Current <> null then
-                    Console.Write "has context in current"
                     Activity.Current.Context
                 else
                     Unchecked.defaultof<ActivityContext>
@@ -60,6 +53,10 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
                     props.Headers[key] <- value
                 with
                 | ex -> logger.LogError(ex, "Failed to inject trace context.") |> ignore
+
+            activity.SetTag("messaging.system", "rabbitmq") |> ignore
+            activity.SetTag("messaging.destination_kind", "queue") |> ignore
+            activity.SetTag("messaging.rabbitmq.queue", "sample") |> ignore
   
             let baggage = Baggage.Current;
             let propContext = new PropagationContext(contextToInject,baggage);
@@ -70,8 +67,9 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
             let message = sprintf "%f" (rand.NextDouble())
             let body = Encoding.UTF8.GetBytes(message)
             printfn "publish     : %s" message
+            
             (body,props)
-        Async.RunSynchronously (producer (getChannel()) publisher Workflow_QUEUE)
+        Async.RunSynchronously(producer (getChannel()) publisher Workflow_QUEUE)
         "sent"
 
     

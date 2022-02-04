@@ -3,25 +3,17 @@ namespace M2
 #nowarn "20"
 open System
 open System.Threading
-open System.Text
 open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
 open OpenTelemetry.Trace
 open OpenTelemetry.Resources
 open TraceProvider
-open RabbitMQ.Client.Events
+open Helpers
 open Helpers.RabbitHelper
-open Helpers.MongoHelper
-open MongoDB.Bson
 open OpenTelemetry.Context.Propagation
-open RabbitMQ.Client
-open System.Collections
-open System.Linq
-open System.Collections.Generic
-open OpenTelemetry
 open System.Diagnostics
-
+open M2.Controllers
 
 
 module Program =
@@ -39,42 +31,15 @@ module Program =
             builder
                 .AddOtlpExporter()
                 .AddSource(serviceName)
+                .AddSource(nameof(StudentController))
+                .AddSource(nameof(RabbitHelper))
+                .AddSource(nameof(MongoHelper))
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName,serviceVersion=serviceVersion))
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation()
                 .AddMongoDBInstrumentation()
-         
             |> ignore
         )
-
-        let ExtractTraceContextFromBasicProperties (props : IBasicProperties) (key : string) : IEnumerable<string> =
-            let output = Enumerable.Empty<string>()
-            try
-                let isValid,result = props.Headers.TryGetValue key
-                if isValid then
-                    result.ToString()
-                    |> output.Append
-                    |> ignore
-            
-            with 
-            | ex -> Console.WriteLine($"Failed to extract trace context: {ex}")
-
-            output
-
-        let dbhandler sender (data:BasicDeliverEventArgs) =
-            let propagrationContext = Propagator.Extract(Unchecked.defaultof<PropagationContext>,data.BasicProperties, ExtractTraceContextFromBasicProperties)
-            Baggage.Current <- propagrationContext.Baggage
-
-            let activity = ActivitySource.StartActivity("inserting now",ActivityKind.Consumer,propagrationContext.ActivityContext)
-            let body = data.Body.ToArray()
-            let message = Encoding.UTF8.GetString(body)
-            
-            new BsonElement("name",message)
-            |> (new BsonDocument()).Add
-            |> (getCollection workflowCollectionName).InsertOne
-
-        
-        
 
         builder.Services.AddTransient<IActivityService, ActivityService>()
         builder.Services.AddControllers()
@@ -85,9 +50,7 @@ module Program =
 
         app.UseAuthorization()
 
-        
         app.MapControllers()
-
 
         let token = new CancellationTokenSource()   
               
