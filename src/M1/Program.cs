@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
+using OpenTelemetry.Metrics;
 
 var serviceName = "CCS.OpenTelemetry.M1";
 var serviceVersion = "1.0.0";
@@ -17,6 +18,15 @@ builder.Services.AddOpenTelemetryTracing(b =>
             .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
     .AddHttpClientInstrumentation()
     .AddAspNetCoreInstrumentation();
+});
+
+builder.Services.AddOpenTelemetryMetrics(b =>
+{
+    b
+    .AddHttpClientInstrumentation()
+    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName).AddTelemetrySdk())
+    .AddMeter("M1 Meter")
+    .AddOtlpExporter();
 });
 
 var MyActivitySource = new ActivitySource(serviceName);

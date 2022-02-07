@@ -13,6 +13,7 @@ open System.Diagnostics
 open OpenTelemetry
 open RabbitMQ.Client
 open System.Collections.Generic
+open System.Net.Http
 
 [<ApiController>]
 [<Route("backend")>]
@@ -23,6 +24,10 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
     
     [<HttpGet>]
     member _.Get() =
+        let client = new HttpClient()
+        let httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:8080/final");
+        let httpResponse = client.Send(httpRequest)
+
         async{
             let collection = getCollection studentCollectionName
             let task = collection.Find<Student>(FilterDefinition.Empty).ToListAsync()

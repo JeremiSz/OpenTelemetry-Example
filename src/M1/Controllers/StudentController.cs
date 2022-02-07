@@ -9,6 +9,7 @@ using OpenTelemetry;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 
 namespace M1.Controllers
 {
@@ -16,9 +17,11 @@ namespace M1.Controllers
    [Route("api/student")]
     public class StudentController : Controller
     {
+        Meter meter = new Meter("M1 Controller");
+        
         public StudentController(ActivitySource activitySource)
         {
-            if(activitySource == null)
+            if (activitySource == null)
                 throw new ArgumentNullException(nameof(activitySource));
 
             this.activitySource = activitySource;
