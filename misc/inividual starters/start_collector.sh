@@ -1,1 +1,1 @@
-docker compose -f "./open_collector_support/docker-compose.yaml" up
+docker compose -f "../open_collector_support/docker-compose.yaml" up

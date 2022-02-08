@@ -2,6 +2,9 @@ using System.Diagnostics;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Metrics;
+using M1.helpers;
+using System.Diagnostics.Metrics;
+using M1.Controllers;
 
 var serviceName = "CCS.OpenTelemetry.M1";
 var serviceVersion = "1.0.0";
@@ -24,6 +27,8 @@ builder.Services.AddOpenTelemetryMetrics(b =>
 {
     b
     .AddHttpClientInstrumentation()
+    .AddAspNetCoreInstrumentation()
+    .AddConsoleExporter()
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName).AddTelemetrySdk())
     .AddMeter("M1 Meter")
     .AddOtlpExporter();
@@ -32,6 +37,7 @@ builder.Services.AddOpenTelemetryMetrics(b =>
 var MyActivitySource = new ActivitySource(serviceName);
 
 builder.Services.AddSingleton<ActivitySource>(MyActivitySource);
+builder.Services.AddSingleton<MetricsHelper>(new MetricsHelper(getRequests,getCPU));
 
 builder.Services.AddControllers();
 
@@ -40,3 +46,12 @@ var app = builder.Build();
 app.MapControllers();
 
 app.Run();
+
+Measurement<long> getRequests()
+{
+    return new Measurement<long>(StudentController.requestCount);
+}
+Measurement<long> getCPU()
+{
+    return new Measurement<long>(StudentController.CPU);
+}

@@ -25,7 +25,7 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
     [<HttpGet>]
     member _.Get() =
         let client = new HttpClient()
-        let httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:8080/final");
+        let httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000");
         let httpResponse = client.Send(httpRequest)
 
         async{

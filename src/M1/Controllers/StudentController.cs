@@ -1,15 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using System.Threading;
-using OpenTelemetry;
-using OpenTelemetry.Trace;
-using OpenTelemetry.Resources;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using M1.helpers;
+
 
 namespace M1.Controllers
 {
@@ -17,14 +10,18 @@ namespace M1.Controllers
    [Route("api/student")]
     public class StudentController : Controller
     {
-        Meter meter = new Meter("M1 Controller");
-        
-        public StudentController(ActivitySource activitySource)
+        Random random = new Random();
+        MetricsHelper metricsHelper;
+        public static long requestCount = 0;
+        public static long CPU = 0;
+
+        public StudentController(ActivitySource activitySource, MetricsHelper metricsHelper)
         {
             if (activitySource == null)
                 throw new ArgumentNullException(nameof(activitySource));
 
             this.activitySource = activitySource;
+            this.metricsHelper = metricsHelper;
         }
 
         ActivitySource activitySource;
@@ -34,6 +31,9 @@ namespace M1.Controllers
         {
             var activity = Activity.Current;
             activity?.SetTag("Get", "Get request made to M1.");
+            requestCount++;
+
+            metricsHelper.requestCounter.Add(1);
 
             helper();
             
@@ -50,12 +50,13 @@ namespace M1.Controllers
             var activity = Activity.Current;
             activity?.SetTag("Post", "Post request made to M1.");
 
-            helper();
-            
             HttpClient client = new HttpClient();
             HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7225/backend");
-            HttpResponseMessage httpResponse = client.Send(httpRequest); 
-            
+            HttpResponseMessage httpResponse = client.Send(httpRequest);
+
+            metricsHelper.latency.Record(random.Next(10), KeyValuePair.Create<string, object?>("hello", "hi"));
+            CPU = random.Next();
+
             return "post students";
         }
 
@@ -63,6 +64,7 @@ namespace M1.Controllers
         {
             using var activity = activitySource.StartActivity("M1");
             activity?.SetBaggage("Done", "helper");
+            
         }
     }
 }
