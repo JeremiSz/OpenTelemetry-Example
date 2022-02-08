@@ -1,15 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using System.Threading;
-using OpenTelemetry;
-using OpenTelemetry.Trace;
-using OpenTelemetry.Resources;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using M1.helpers;
 
 
 namespace M1.Controllers
@@ -18,20 +10,18 @@ namespace M1.Controllers
    [Route("api/student")]
     public class StudentController : Controller
     {
-        Meter meter = new Meter("M1 Controller");
-        Counter<long> counter;
-        Histogram<double> histogram;
         Random random = new Random();
+        MetricsHelper metricsHelper;
+        public static long requestCount = 0;
+        public static long CPU = 0;
 
-        public StudentController(ActivitySource activitySource)
+        public StudentController(ActivitySource activitySource, MetricsHelper metricsHelper)
         {
             if (activitySource == null)
                 throw new ArgumentNullException(nameof(activitySource));
 
             this.activitySource = activitySource;
-
-            counter = meter.CreateCounter<long>("RequestCounter", "total");
-            histogram = meter.CreateHistogram<double>("RandomHistogram");
+            this.metricsHelper = metricsHelper;
         }
 
         ActivitySource activitySource;
@@ -41,8 +31,9 @@ namespace M1.Controllers
         {
             var activity = Activity.Current;
             activity?.SetTag("Get", "Get request made to M1.");
+            requestCount++;
 
-            counter.Add(1);
+            metricsHelper.requestCounter.Add(1);
 
             helper();
             
@@ -63,10 +54,8 @@ namespace M1.Controllers
             HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7225/backend");
             HttpResponseMessage httpResponse = client.Send(httpRequest);
 
-#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
-            histogram.Record(random.Next(10), KeyValuePair.Create<string, object>("hello", "hi"));
-#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
-
+            metricsHelper.latency.Record(random.Next(10), KeyValuePair.Create<string, object?>("hello", "hi"));
+            CPU = random.Next();
 
             return "post students";
         }

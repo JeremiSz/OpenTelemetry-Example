@@ -5,12 +5,7 @@ services:
     container_name: collector
     volumes:
     - ./otel-local-config.yaml:/otel-local-config.yaml
-    #networks:
-    #- my-net
-    #entrypoint: ["/otelcol"]
     command: ["--config", "/otel-local-config.yaml"]
-    environment:
-      LOG_EXPORTER_LOG_LEVEL: "DEBUG"
     ports:
     - "4317:4317"
     - "16685:16685"
@@ -21,12 +16,7 @@ services:
     container_name: prometheus
     volumes:
     - ./prometheus.yaml:/prometheus.yaml
-    #networks:
-    #- my-net
-    #entrypoint: ["/prometheus"]
     command: ["--config.file", "/prometheus.yaml"]
-    #environment:
-      #LOG_EXPORTER_LOG_LEVEL: "DEBUG"
     ports:
     - "9090:9090"
 networks:

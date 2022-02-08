@@ -9,7 +9,7 @@ processors:
 
 exporters:
   logging:
-    logLevel: debug
+    logLevel: info
   prometheus:
     endpoint: 0.0.0.0:8889
   jaeger:
