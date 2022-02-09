@@ -14,6 +14,7 @@ open OpenTelemetry
 open RabbitMQ.Client
 open System.Collections.Generic
 open System.Net.Http
+open System.Diagnostics
 
 [<ApiController>]
 [<Route("backend")>]
@@ -26,7 +27,12 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
     member _.Get() =
         let client = new HttpClient()
         let httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000");
-        let httpResponse = client.Send(httpRequest)
+        try 
+            let httpResponse = client.Send(httpRequest);
+            null
+        with
+        | ex ->  Activity.Current.AddTag("error",true).AddEvent(ActivityEvent(ex.ToString())) |> ignore; null
+        |> ignore
 
         async{
             let collection = getCollection studentCollectionName
@@ -76,6 +82,8 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
             (body,props)
         Async.RunSynchronously(producer (getChannel()) publisher Workflow_QUEUE)
         "sent"
+
+    
 
     
 

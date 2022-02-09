@@ -6,6 +6,10 @@ receivers:
 
 processors:
   batch:
+  probabilistic_sampler:    
+    hash_seed: 22    
+    sampling_percentage: 15
+
 
 exporters:
   logging:
@@ -26,5 +30,4 @@ service:
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging, prometheus]
-
+      exporters: [prometheus]

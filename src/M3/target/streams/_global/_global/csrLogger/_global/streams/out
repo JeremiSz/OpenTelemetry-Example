@@ -1,4 +1,13 @@
-[debug] downloaded https://repo1.maven.org/maven2/org/scala-sbt/compiler-bridge_2.13/1.3.5/compiler-bridge_2.13-1.3.5.pom
-[debug] downloaded https://repo1.maven.org/maven2/org/scala-sbt/util-interface/1.3.0/util-interface-1.3.0.pom
-[debug] downloaded https://repo1.maven.org/maven2/org/scala-sbt/util-interface/1.3.0/util-interface-1.3.0.jar
-[debug] downloaded https://repo1.maven.org/maven2/org/scala-sbt/compiler-bridge_2.13/1.3.5/compiler-bridge_2.13-1.3.5-sources.jar
+[debug] downloaded https://repo1.maven.org/maven2/org/postgresql/postgresql/42.3.2/postgresql-42.3.2.pom
+[debug] downloaded https://repo1.maven.org/maven2/com/typesafe/play/play-jdbc_2.13/2.8.13/play-jdbc_2.13-2.8.13.pom
+[debug] downloaded https://repo1.maven.org/maven2/tyrex/tyrex/1.0.1/tyrex-1.0.1.pom
+[debug] downloaded https://repo1.maven.org/maven2/com/zaxxer/HikariCP/3.4.5/HikariCP-3.4.5.pom
+[debug] downloaded https://repo1.maven.org/maven2/com/typesafe/play/play-jdbc-api_2.13/2.8.13/play-jdbc-api_2.13-2.8.13.pom
+[debug] downloaded https://repo1.maven.org/maven2/org/checkerframework/checker-qual/3.5.0/checker-qual-3.5.0.pom
+[debug] downloaded https://repo1.maven.org/maven2/com/googlecode/usc/jdbcdslog/1.0.6.2/jdbcdslog-1.0.6.2.pom
+[debug] downloaded https://repo1.maven.org/maven2/com/typesafe/play/play-jdbc-api_2.13/2.8.13/play-jdbc-api_2.13-2.8.13.jar
+[debug] downloaded https://repo1.maven.org/maven2/com/typesafe/play/play-jdbc_2.13/2.8.13/play-jdbc_2.13-2.8.13.jar
+[debug] downloaded https://repo1.maven.org/maven2/tyrex/tyrex/1.0.1/tyrex-1.0.1.jar
+[debug] downloaded https://repo1.maven.org/maven2/com/zaxxer/HikariCP/3.4.5/HikariCP-3.4.5.jar
+[debug] downloaded https://repo1.maven.org/maven2/com/googlecode/usc/jdbcdslog/1.0.6.2/jdbcdslog-1.0.6.2.jar
+[debug] downloaded https://repo1.maven.org/maven2/org/postgresql/postgresql/42.3.2/postgresql-42.3.2.jar

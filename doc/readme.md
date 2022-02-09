@@ -2,25 +2,29 @@
 
 * Traces - A tree of spans representing the lifetime of a call to a service.
 * Span - Starting time of service and full duration. Has a SpanID.
-* Tags - Can be used to provide metadata on a specific trace. Appears in final output along with span.
-* Baggage - Metadata passed from parent to child, does not get output at the end.
+* Tag - Key value Metadata on a specific span. Does endpoint.
+* Baggage - Metadata passed from parent to child span, does not reach endpoint.
+* Event - A Log tied to a spesific span.
 
 # Traces
 
 * Traces can have parent/child relationships with each other.
-* Traces are connected when they have the same TraceID.
+* Traces are connected in the endpoint when they have the same TraceID.
 * A trace consists of:
     * TraceID - Identifies the trace.
     * Span(s)
-    * Services
+    * Number of Services
     * Depth
 
 # Terminology
 
-| OpenTelemetry | .NET 6.0 |
-| :--- | :--- |
-| Tracer | ActivitySource |
-| Span | Activity |
+| OpenTelemetry | .NET 6.0 | Java |
+| :--- | :--- | :--- |
+| Tracer | ActivitySource | Tracer | 
+| Span | Activity | Span | 
+| Baggage | Baggage | Baggage | 
+| Tag | Tag | Tag |
+| Event | Event | Event |
 
 # OpenTelemetry Collector
 
@@ -34,3 +38,6 @@
 * Traces can be exported to OTLP, Jaeger, Zipkin, Prometheus, etc or just logged to view locally.
 * Contributor version of the Collector supports extra receivers/exporters such as Prometheus, Kafka and Kubernetes.
 * Spans can be renamed by using their metadata tags.
+
+# Useful links
+* For filtering traces use [Tail Sampler](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/tailsamplingprocessor) in collector.

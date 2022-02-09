@@ -1,31 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Diagnostics.Metrics;
 using M1.helpers;
-
+using Npgsql;
+using System.Data;
 
 namespace M1.Controllers
 {
-   [ApiController]
-   [Route("api/student")]
+    [ApiController]
+    [Route("api/student")]
     public class StudentController : Controller
     {
         Random random = new Random();
         MetricsHelper metricsHelper;
         public static long requestCount = 0;
         public static long CPU = 0;
+        ILogger<StudentController> logger;
 
-        public StudentController(ActivitySource activitySource, MetricsHelper metricsHelper)
+        public StudentController(ILogger<StudentController> logger, ActivitySource activitySource, MetricsHelper metricsHelper)
         {
             if (activitySource == null)
                 throw new ArgumentNullException(nameof(activitySource));
 
             this.activitySource = activitySource;
             this.metricsHelper = metricsHelper;
+            this.logger = logger;
         }
 
         ActivitySource activitySource;
-        
+
         [HttpGet]
         public string get()
         {
@@ -35,11 +37,16 @@ namespace M1.Controllers
 
             metricsHelper.requestCounter.Add(1);
 
-            helper();
-            
             HttpClient client = new HttpClient();
             HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7225/backend");
-            HttpResponseMessage httpResponse = client.Send(httpRequest); 
+            try
+            {
+                HttpResponseMessage httpResponse = client.Send(httpRequest);
+            }
+            catch (Exception ex)
+            {
+                activity.AddEvent(new ActivityEvent(ex.ToString()));
+            }
 
             return "Get Students";
         }
@@ -57,14 +64,29 @@ namespace M1.Controllers
             metricsHelper.latency.Record(random.Next(10), KeyValuePair.Create<string, object?>("hello", "hi"));
             CPU = random.Next();
 
+            helper();
+
             return "post students";
+        }
+
+        [HttpPut]
+        public string put()
+        {
+            string connectionStr = "Host=host.docker.internal;Port=5432;Username=postgres;Password=mysecretpassword;Database=postgres;";
+            var connection = new NpgsqlConnection(connectionStr);
+            connection.Open();
+            using (var command = new NpgsqlCommand("INSERT INTO test VALUES (1)", connection))
+            {
+                command.ExecuteNonQuery();
+            }
+            return "yey"; 
         }
 
         void helper()
         {
             using var activity = activitySource.StartActivity("M1");
             activity?.SetBaggage("Done", "helper");
-            
+            activity?.AddEvent(new ActivityEvent("Helper did work"));
         }
     }
 }

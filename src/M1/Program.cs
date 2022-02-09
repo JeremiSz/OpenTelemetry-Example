@@ -5,6 +5,7 @@ using OpenTelemetry.Metrics;
 using M1.helpers;
 using System.Diagnostics.Metrics;
 using M1.Controllers;
+using Npgsql;
 
 var serviceName = "CCS.OpenTelemetry.M1";
 var serviceVersion = "1.0.0";
@@ -20,7 +21,8 @@ builder.Services.AddOpenTelemetryTracing(b =>
         ResourceBuilder.CreateDefault()
             .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
     .AddHttpClientInstrumentation()
-    .AddAspNetCoreInstrumentation();
+    .AddAspNetCoreInstrumentation()
+    .AddNpgsql();
 });
 
 builder.Services.AddOpenTelemetryMetrics(b =>
