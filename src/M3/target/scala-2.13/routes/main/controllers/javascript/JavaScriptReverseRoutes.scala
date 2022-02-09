@@ -28,46 +28,6 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:8
-    def tutorial: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.tutorial",
-      """
-        function() {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "tutorial"})
-        }
-      """
-    )
-  
-    // @LINE:7
-    def explore: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.HomeController.explore",
-      """
-        function() {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "explore"})
-        }
-      """
-    )
-  
-  }
-
-  // @LINE:12
-  class ReverseAssets(_prefix: => String) {
-
-    def _defaultPrefix: String = {
-      if (_prefix.endsWith("/")) "" else "/"
-    }
-
-  
-    // @LINE:12
-    def versioned: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.Assets.versioned",
-      """
-        function(file1) {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "assets/" + (""" + implicitly[play.api.mvc.PathBindable[Asset]].javascriptUnbind + """)("file", file1)})
-        }
-      """
-    )
-  
   }
 
 
