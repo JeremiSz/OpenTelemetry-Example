@@ -4,7 +4,7 @@
 * Span - Starting time of service and full duration. Has a SpanID.
 * Tag - Key value Metadata on a specific span. Does endpoint.
 * Baggage - Metadata passed from parent to child span, does not reach endpoint.
-* Event - A Log tied to a spesific span.
+* Event - A Log tied to a specific span.
 
 # Traces
 
@@ -23,7 +23,7 @@
 | Tracer | ActivitySource | Tracer | 
 | Span | Activity | Span | 
 | Baggage | Baggage | Baggage | 
-| Tag | Tag | Tag |
+| Tag | Tag | Attribute |
 | Event | Event | Event |
 
 # OpenTelemetry Collector
@@ -39,5 +39,10 @@
 * Contributor version of the Collector supports extra receivers/exporters such as Prometheus, Kafka and Kubernetes.
 * Spans can be renamed by using their metadata tags.
 
+# Java-Specific Information
+
+* In Java, you can record information on a throwable by using the recordException() method.
+
 # Useful links
 * For filtering traces use [Tail Sampler](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/tailsamplingprocessor) in collector.
+* Examples of Tail Sampling include include probabilistic, string_attribute and numeric_attribute.

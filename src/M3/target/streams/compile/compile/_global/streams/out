@@ -1,2 +1,7 @@
-[error] C:\Extra\opentelemetry\src\M3\app\controllers\DataAcceor.java:15:1: invalid method declaration; return type required
-[error] C:\Extra\opentelemetry\src\M3\app\controllers\HomeController.java:7:1: <identifier> expected
+[error] E:\opentelemetry\src\M3\app\Module.scala:18:25: not found: value BatchSpanProcessor
+[error]       .addSpanProcessor(BatchSpanProcessor.builder(OtlpGrpcSpanExporter.builder().build()).build())
+[error]                         ^
+[error] E:\opentelemetry\src\M3\app\Module.scala:18:52: not found: value OtlpGrpcSpanExporter
+[error]       .addSpanProcessor(BatchSpanProcessor.builder(OtlpGrpcSpanExporter.builder().build()).build())
+[error]                                                    ^
+[error] two errors found
