@@ -6,9 +6,23 @@ receivers:
 
 processors:
   batch:
-  probabilistic_sampler:    
-    hash_seed: 22    
-    sampling_percentage: 15
+  tail_sampling:    
+    decision_wait: 10s
+    # num_traces: default = 50,000
+    # expected_new_traces_per_sec: default = 0
+    policies:
+      [
+          {
+             name: probabilistic-policy,
+             type: probabilistic,
+             probabilistic: {sampling_percentage: 50}
+          },
+          # {
+          #    name: latency-policy,
+          #    type: latency,
+          #    latency: {threshold_ms: 5000}
+          # }
+      ]
 
 
 exporters:
@@ -25,7 +39,7 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [batch]
+      processors: [tail_sampling]
       exporters: [jaeger]
     metrics:
       receivers: [otlp]
