@@ -2,6 +2,7 @@ using System.Diagnostics;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Logs;
 using M1.helpers;
 using System.Diagnostics.Metrics;
 using M1.Controllers;
@@ -34,6 +35,14 @@ builder.Services.AddOpenTelemetryMetrics(b =>
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName).AddTelemetrySdk())
     .AddMeter("M1 Meter")
     .AddOtlpExporter();
+});
+
+builder.Logging.AddOpenTelemetry(b =>
+{
+    b.IncludeFormattedMessage = true;
+    b.IncludeScopes = true;
+    b.ParseStateValues = true;
+    b.AddOtlpExporter();
 });
 
 var MyActivitySource = new ActivitySource(serviceName);

@@ -5,6 +5,7 @@ services:
     container_name: collector
     volumes:
     - ./otel-local-config.yaml:/otel-local-config.yaml
+    - ./:/etc/output:rw
     command: ["--config", "/otel-local-config.yaml"]
     ports:
     - "4317:4317"

@@ -34,14 +34,20 @@ exporters:
     endpoint: jaeger:14250
     tls:
       insecure: true
+  file:
+    path: /etc/output/logs.json
 
 service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [tail_sampling]
+      processors: [batch]
       exporters: [jaeger]
     metrics:
       receivers: [otlp]
       processors: [batch]
       exporters: [prometheus]
+    logs:
+      receivers: [otlp]
+      processors: []
+      exporters: [logging, file]

@@ -37,6 +37,10 @@ namespace M1.Controllers
 
             metricsHelper.requestCounter.Add(1);
 
+            logger.LogInformation("Get request has been made to /api/student in M1.", new string[] { });
+            logger.LogError(new IOException(), "IO Exception thrown.", new string[] { });
+            logger.LogWarning("This is a warning.", new string[] { });
+
             HttpClient client = new HttpClient();
             HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7225/backend");
             try
@@ -45,7 +49,7 @@ namespace M1.Controllers
             }
             catch (Exception ex)
             {
-                activity.AddEvent(new ActivityEvent(ex.ToString()));
+                activity?.AddEvent(new ActivityEvent(ex.ToString()));
             }
 
             return "Get Students";
@@ -87,6 +91,16 @@ namespace M1.Controllers
             using var activity = activitySource.StartActivity("M1");
             activity?.SetBaggage("Done", "helper");
             activity?.AddEvent(new ActivityEvent("Helper did work"));
+        }
+
+        [HttpOptions]
+        public String options()
+        {
+            //logger.LogInformation("Hello I am logging");
+            //logger.LogError(new EventId(1),"ahh i broke");
+            //logger.LogWarning(new EventId(2), "you have been warned");
+
+            return "logged";
         }
     }
 }
