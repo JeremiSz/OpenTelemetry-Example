@@ -46,7 +46,6 @@ public class HomeController extends Controller {
 
     @WithSpan
     private void helperOne(){
-        System.out.println("hello world");
         Span span = Span.current();
         span.setAttribute("hi","hi");
         span.recordException(new IOException());
