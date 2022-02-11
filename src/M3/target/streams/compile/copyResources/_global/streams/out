@@ -1,4 +1,4 @@
 [debug] Copy resource mappings: 
-[debug] 	(E:\opentelemetry\src\M3\conf\application.conf,E:\opentelemetry\src\M3\target\scala-2.13\classes\application.conf)
-[debug] 	(E:\opentelemetry\src\M3\conf\logback.xml,E:\opentelemetry\src\M3\target\scala-2.13\classes\logback.xml)
-[debug] 	(E:\opentelemetry\src\M3\conf\routes,E:\opentelemetry\src\M3\target\scala-2.13\classes\routes)
+[debug] 	(C:\Extra\opentelemetry\src\M3\conf\application.conf,C:\Extra\opentelemetry\src\M3\target\scala-2.13\classes\application.conf)
+[debug] 	(C:\Extra\opentelemetry\src\M3\conf\logback.xml,C:\Extra\opentelemetry\src\M3\target\scala-2.13\classes\logback.xml)
+[debug] 	(C:\Extra\opentelemetry\src\M3\conf\routes,C:\Extra\opentelemetry\src\M3\target\scala-2.13\classes\routes)

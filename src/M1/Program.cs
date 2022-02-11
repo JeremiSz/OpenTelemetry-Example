@@ -30,8 +30,7 @@ builder.Services.AddOpenTelemetryMetrics(b =>
 {
     b
     .AddHttpClientInstrumentation()
-    .AddAspNetCoreInstrumentation()
-    .AddConsoleExporter()
+    .AddAspNetCoreInstrumentation()\w
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName).AddTelemetrySdk())
     .AddMeter("M1 Meter")
     .AddOtlpExporter();

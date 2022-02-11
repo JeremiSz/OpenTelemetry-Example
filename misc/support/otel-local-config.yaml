@@ -6,23 +6,23 @@ receivers:
 
 processors:
   batch:
-  tail_sampling:    
-    decision_wait: 10s
+  #tail_sampling:    
+    #decision_wait: 10s
     # num_traces: default = 50,000
     # expected_new_traces_per_sec: default = 0
-    policies:
-      [
-          {
-             name: probabilistic-policy,
-             type: probabilistic,
-             probabilistic: {sampling_percentage: 50}
-          },
+    #policies:
+      #[
+           #{
+              #name: probabilistic-policy,
+              #type: probabilistic,
+              #probabilistic: {sampling_percentage: 50}
+          # },
           # {
           #    name: latency-policy,
           #    type: latency,
           #    latency: {threshold_ms: 5000}
           # }
-      ]
+      #]
 
 
 exporters:
