@@ -1,7 +1,6 @@
 ﻿namespace Helpers
 
 open System.Diagnostics.Metrics
-open System
 
 type MetricsHelper()=
     member _.meter = new Meter("CCS.OpenTelemetry.M2")

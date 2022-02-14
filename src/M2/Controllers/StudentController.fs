@@ -35,6 +35,9 @@ type StudentController (metricsHelper : MetricsHelper, logger : ILogger<StudentC
         let client = new HttpClient()
         let httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000");
         try 
+            //generate fake errors for the sake of sampling
+            if random.Next(0,10) < 5 then
+                raise (TimeoutException())
             let httpResponse = client.Send(httpRequest);
             null
         with

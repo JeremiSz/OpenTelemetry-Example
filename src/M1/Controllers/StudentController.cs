@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using M1.helpers;
 using Npgsql;
-using System.Data;
 
 namespace M1.Controllers
 {
@@ -91,16 +90,6 @@ namespace M1.Controllers
             using var activity = activitySource.StartActivity("M1");
             activity?.SetBaggage("Done", "helper");
             activity?.AddEvent(new ActivityEvent("Helper did work"));
-        }
-
-        [HttpOptions]
-        public String options()
-        {
-            //logger.LogInformation("Hello I am logging");
-            //logger.LogError(new EventId(1),"ahh i broke");
-            //logger.LogWarning(new EventId(2), "you have been warned");
-
-            return "logged";
         }
     }
 }
