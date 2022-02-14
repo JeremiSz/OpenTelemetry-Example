@@ -1,1 +1,1 @@
-docker run --name some-mongo -d mongo:5.0
+docker run --network=my-net --name some-mongo -d mongo:5.0
