@@ -12,7 +12,7 @@ namespace M1.helpers
         public ObservableGauge<long> observer_c { get; private set; }
         public MetricsHelper(Func<Measurement<long>> getCounterMeasurement, Func<Measurement<long>> getGaugeMeasurment)
         {
-            meter = new Meter("M1 Controller");
+            meter = new Meter("CCS.OpenTelemetry.M1");
             requestCounter = meter.CreateCounter<long>("RequestCounter", "total");
             latency = meter.CreateHistogram<double>("RandomHistogram");
             observer_b = meter.CreateObservableCounter("real_world_metric", getCounterMeasurement);

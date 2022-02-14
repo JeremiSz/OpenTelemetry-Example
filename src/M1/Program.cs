@@ -32,8 +32,9 @@ builder.Services.AddOpenTelemetryMetrics(b =>
     .AddHttpClientInstrumentation()
     .AddAspNetCoreInstrumentation()
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName).AddTelemetrySdk())
-    .AddMeter("M1 Meter")
-    .AddOtlpExporter();
+    .AddMeter("CCS.OpenTelemetry.M1")
+    .AddOtlpExporter(options => options.Endpoint = new Uri("http://localhost:4317"))
+    .AddConsoleExporter();
 });
 
 builder.Logging.AddOpenTelemetry(b =>
