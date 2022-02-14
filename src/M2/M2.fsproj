@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="helper\MetricsHelper.fs" />
     <Compile Include="helper\MongoHelper.fs" />
     <Compile Include="helper\RabbitHelper.fs" />
     <Compile Include="ActivityProvider.fs" />

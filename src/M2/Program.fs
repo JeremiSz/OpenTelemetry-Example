@@ -3,6 +3,7 @@ namespace M2
 #nowarn "20"
 open System
 open System.Threading
+open System.Diagnostics.Metrics
 open Microsoft.AspNetCore.Builder
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
@@ -30,8 +31,8 @@ module Program =
     let main args =
 
         let builder = WebApplication.CreateBuilder(args)
-        builder.Services.AddOpenTelemetryTracing(fun builder ->
-            builder
+        builder.Services.AddOpenTelemetryTracing(fun b ->
+            b
                 .AddOtlpExporter()
                 .AddSource(serviceName)
                 .AddSource(nameof(StudentController))
@@ -44,6 +45,17 @@ module Program =
             |> ignore
         )
 
+        builder.Services.AddOpenTelemetryMetrics(fun b ->
+            b
+                .AddHttpClientInstrumentation()
+                .AddAspNetCoreInstrumentation()
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName).AddTelemetrySdk())
+                .AddMeter("CCS.OpenTelemetry.M2")
+                .AddOtlpExporter()
+                .AddConsoleExporter()
+            |> ignore
+        )
+
         builder.Logging.AddOpenTelemetry(fun b ->
             b.IncludeFormattedMessage <- true
             b.IncludeScopes <- true
@@ -51,6 +63,7 @@ module Program =
             b.AddOtlpExporter() |> ignore
         )
 
+        builder.Services.AddSingleton<MetricsHelper, MetricsHelper>()
         builder.Services.AddTransient<IActivityService, ActivityService>()
         builder.Services.AddControllers()
         

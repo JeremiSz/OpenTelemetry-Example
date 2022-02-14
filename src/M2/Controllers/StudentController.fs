@@ -14,20 +14,23 @@ open OpenTelemetry
 open RabbitMQ.Client
 open System.Collections.Generic
 open System.Net.Http
-open System.Diagnostics
+open Helpers
 
 [<ApiController>]
 [<Route("backend")>]
-type StudentController (logger : ILogger<StudentController>, traceProvider : IActivityService) =
+type StudentController (metricsHelper : MetricsHelper, logger : ILogger<StudentController>, traceProvider : IActivityService) =
     inherit ControllerBase()
 
     let Propagator : TextMapPropagator = Propagators.DefaultTextMapPropagator;
+    let random : Random = new Random();
     
     [<HttpGet>]
     member _.Get() =
         logger.LogInformation("Get request has been made to /backend in M2.", string[])
         logger.LogError(new System.IO.IOException(), "IO Exception thrown.", string[])
         logger.LogWarning("This is a warning.", string[])
+
+        metricsHelper.requestCounter.Add(1);
         
         let client = new HttpClient()
         let httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000");
@@ -69,6 +72,8 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
                 with
                 | ex -> logger.LogError(ex, "Failed to inject trace context.") |> ignore
 
+            metricsHelper.latency.Record(random.Next(10), KeyValuePair.Create<string, obj>("hello", "hi"));
+        
             activity.SetTag("messaging.system", "rabbitmq") |> ignore
             activity.SetTag("messaging.destination_kind", "queue") |> ignore
             activity.SetTag("messaging.rabbitmq.queue", "sample") |> ignore
