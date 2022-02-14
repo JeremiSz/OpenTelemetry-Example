@@ -8,12 +8,15 @@ open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
 open OpenTelemetry.Trace
 open OpenTelemetry.Resources
+open OpenTelemetry.Metrics
 open TraceProvider
 open Helpers
 open Helpers.RabbitHelper
 open OpenTelemetry.Context.Propagation
 open System.Diagnostics
 open M2.Controllers
+open OpenTelemetry.Logs
+open Microsoft.Extensions.Logging
 
 
 module Program =
@@ -39,6 +42,13 @@ module Program =
                 .AddAspNetCoreInstrumentation()
                 .AddMongoDBInstrumentation()
             |> ignore
+        )
+
+        builder.Logging.AddOpenTelemetry(fun b ->
+            b.IncludeFormattedMessage <- true
+            b.IncludeScopes <- true
+            b.ParseStateValues <- true
+            b.AddOtlpExporter() |> ignore
         )
 
         builder.Services.AddTransient<IActivityService, ActivityService>()

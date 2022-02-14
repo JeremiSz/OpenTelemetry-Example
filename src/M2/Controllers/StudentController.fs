@@ -25,6 +25,10 @@ type StudentController (logger : ILogger<StudentController>, traceProvider : IAc
     
     [<HttpGet>]
     member _.Get() =
+        logger.LogInformation("Get request has been made to /backend in M2.", string[])
+        logger.LogError(new System.IO.IOException(), "IO Exception thrown.", string[])
+        logger.LogWarning("This is a warning.", string[])
+        
         let client = new HttpClient()
         let httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000");
         try 
