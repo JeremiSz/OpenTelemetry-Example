@@ -23,6 +23,7 @@ type StudentController (metricsHelper : MetricsHelper, logger : ILogger<StudentC
 
     let Propagator : TextMapPropagator = Propagators.DefaultTextMapPropagator;
     let random : Random = new Random();
+    let client = new HttpClient();
     
     [<HttpGet>]
     member _.Get() =
@@ -32,7 +33,6 @@ type StudentController (metricsHelper : MetricsHelper, logger : ILogger<StudentC
 
         metricsHelper.requestCounter.Add(1);
         
-        let client = new HttpClient()
         let httpRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:9000");
         try 
             //generate fake errors for the sake of sampling

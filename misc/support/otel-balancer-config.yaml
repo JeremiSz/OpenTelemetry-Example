@@ -1,0 +1,43 @@
+receivers:
+  otlp/loadbalancer:
+    protocols:
+      grpc:
+
+processors:
+  batch:
+
+exporters:
+  logging:
+    logLevel: debug 
+  loadbalancing:
+    protocol:
+      otlp:
+        timeout: 1s
+        tls:
+          insecure: true
+    resolver:
+      static:
+        hostnames:
+        - collector:55690
+  prometheus:
+    endpoint: 0.0.0.0:8889
+
+service:
+  pipelines:
+    traces/loadbalancer:
+      receivers:
+        - otlp/loadbalancer
+      processors: []
+      exporters:
+        - loadbalancing
+    metrics:
+      receivers: [otlp/loadbalancer]
+      processors: [batch]
+      exporters: [logging, prometheus]
+    logs/loadbalancer:
+      receivers:
+        - otlp/loadbalancer
+      processors: []
+      exporters:
+        - loadbalancing
+    

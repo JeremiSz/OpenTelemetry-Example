@@ -2,7 +2,7 @@ receivers:
   otlp:
     protocols:
       grpc:
-      http:
+        endpoint: 0.0.0.0:55690
 
 processors:
   batch:
@@ -32,8 +32,6 @@ processors:
 exporters:
   logging:
     logLevel: debug
-  prometheus:
-    endpoint: 0.0.0.0:8889
   jaeger:
     endpoint: jaeger:14250
     tls:
@@ -45,12 +43,12 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [tail_sampling]
+      processors: [batch]
       exporters: [jaeger]
     metrics:
       receivers: [otlp]
       processors: [batch]
-      exporters: [logging, prometheus]
+      exporters: [logging]
     logs:
       receivers: [otlp]
       processors: []

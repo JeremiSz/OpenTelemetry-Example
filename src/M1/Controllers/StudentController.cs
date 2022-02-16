@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using M1.helpers;
 using Npgsql;
+using System.Net;
 
 namespace M1.Controllers
 {
@@ -14,6 +15,7 @@ namespace M1.Controllers
         public static long requestCount = 0;
         public static long CPU = 0;
         ILogger<StudentController> logger;
+        HttpClient client;
 
         public StudentController(ILogger<StudentController> logger, ActivitySource activitySource, MetricsHelper metricsHelper)
         {
@@ -23,6 +25,7 @@ namespace M1.Controllers
             this.activitySource = activitySource;
             this.metricsHelper = metricsHelper;
             this.logger = logger;
+            this.client = new HttpClient();
         }
 
         ActivitySource activitySource;
@@ -40,7 +43,6 @@ namespace M1.Controllers
             logger.LogError(new IOException(), "IO Exception thrown.", new string[] { });
             logger.LogWarning("This is a warning.", new string[] { });
 
-            HttpClient client = new HttpClient();
             HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7225/backend");
             try
             {
@@ -60,9 +62,15 @@ namespace M1.Controllers
             var activity = Activity.Current;
             activity?.SetTag("Post", "Post request made to M1.");
 
-            HttpClient client = new HttpClient();
             HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7225/backend");
-            HttpResponseMessage httpResponse = client.Send(httpRequest);
+            try
+            {
+                HttpResponseMessage httpResponse = client.Send(httpRequest);
+            }
+            catch (Exception ex)
+            {
+                activity?.AddEvent(new ActivityEvent(ex.ToString()));
+            }
 
             metricsHelper.latency.Record(random.Next(10), KeyValuePair.Create<string, object?>("hello", "hi"));
             CPU = random.Next();
@@ -76,9 +84,11 @@ namespace M1.Controllers
         public string put()
         {
             string connectionStr = "Host=host.docker.internal;Port=5432;Username=postgres;Password=mysecretpassword;Database=postgres;";
-            var connection = new NpgsqlConnection(connectionStr);
-            connection.Open();
-            using (var command = new NpgsqlCommand("INSERT INTO test VALUES (1)", connection))
+
+            var conn = new NpgsqlConnection(connectionStr);
+            conn.Open();
+
+            using (var command = new NpgsqlCommand("INSERT INTO test VALUES (1)", conn))
             {
                 command.ExecuteNonQuery();
             }

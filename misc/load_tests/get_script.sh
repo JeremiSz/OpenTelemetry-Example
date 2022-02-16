@@ -1,1 +1,1 @@
-k6 run --vus 10 --iterations 1000 get_load_test.js
+k6 run get_load_test.js

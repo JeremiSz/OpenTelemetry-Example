@@ -1,1 +1,1 @@
-k6 run --vus 10 --iterations 1000 post_load_test.js
+k6 run post_load_test.js

@@ -8,6 +8,16 @@ services:
     #command: ["--config.file", "/prometheus.yaml"]
     ports:
     - "9090:9090"
+  loadbalancer:
+    image: otel/opentelemetry-collector-contrib
+    container_name: loadbalancer
+    volumes:
+    - ./otel-balancer-config.yaml:/otel-local-config.yaml
+    command: ["--config", "/otel-local-config.yaml"]
+    ports:
+    - "4317:4317"
+    - "8888:8888"
+    - "8889:8889"
   collector:
     image: otel/opentelemetry-collector-contrib
     container_name: collector
@@ -16,10 +26,9 @@ services:
     - ./:/etc/output:rw
     command: ["--config", "/otel-local-config.yaml"]
     ports:
-    - "4317:4317"
+    #- "4317:4317"
     - "16685:16685"
-    - "8888:8888"
-    - "8889:8889"
+    - "55690:55690"
 networks:
   default:
     external: true

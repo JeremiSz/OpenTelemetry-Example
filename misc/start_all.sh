@@ -21,8 +21,9 @@ docker run -d --hostname my-rabbit \
 --name rabbit rabbitmq:3
 
 #postgresql
-docker run --name some-postgres -p 5432:5432 \
--e POSGRES_USER=123 -e POSTGRES_PASSWORD=mysecretpassword \
+docker run --name some-postgres \
+-p 5432:5432 \
+-e POSTGRES_PASSWORD=mysecretpassword \
 -v newData -d postgres
 
 #jaeger
