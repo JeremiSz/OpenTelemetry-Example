@@ -1,0 +1,1 @@
+k6 run post_load_test.js

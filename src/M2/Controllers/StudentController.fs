@@ -92,7 +92,7 @@ type StudentController (metricsHelper : MetricsHelper, logger : ILogger<StudentC
             printfn "publish     : %s" message
             
             (body,props)
-        Async.RunSynchronously(producer (getChannel()) publisher Workflow_QUEUE)
+        Async.RunSynchronously(producer (getChannel()) publisher)
         "sent"
 
     

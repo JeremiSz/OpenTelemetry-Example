@@ -27,14 +27,16 @@ module RabbitHelper =
         factory.HostName <- HOST
         factory.Port <- PORT
         factory.CreateConnection()
+    let channel = connection.CreateModel();
+    do channel.QueueDeclare(Workflow_QUEUE, false, false, false, null) |> ignore
 
     let getChannel() =
-        connection.CreateModel();
+        channel
 
-    let producer (channel:IModel) (publisher: unit -> byte[] * IBasicProperties) queue  = async {
-        do channel.QueueDeclare(queue, false, false, false, null) |> ignore
+    let producer (channel:IModel) (publisher: unit -> byte[] * IBasicProperties)  = async {
+
         let body, basicProperties = publisher()
-        channel.BasicPublish("", queue, basicProperties,body )
+        channel.BasicPublish("", Workflow_QUEUE, basicProperties,body )
     }
 
     let consumer (channel:IModel) queue (handler :obj -> BasicDeliverEventArgs -> unit) (token: CancellationTokenSource) = async {

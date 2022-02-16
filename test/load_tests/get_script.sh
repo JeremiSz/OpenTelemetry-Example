@@ -1,0 +1,1 @@
+k6 run get_load_test.js
