@@ -31,7 +31,7 @@ namespace M1.Controllers
         ActivitySource activitySource;
 
         [HttpGet]
-        public string get()
+        public async Task<string>? get()
         {
             var activity = Activity.Current;
             activity?.SetTag("Get", "Get request made to M1.");
@@ -44,32 +44,35 @@ namespace M1.Controllers
             logger.LogWarning("This is a warning.", new string[] { });
 
             HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7225/backend");
+            
             try
             {
-                HttpResponseMessage httpResponse = client.Send(httpRequest);
+                return await (await client.SendAsync(httpRequest)).Content.ReadAsStringAsync();
+
             }
             catch (Exception ex)
             {
                 activity?.AddEvent(new ActivityEvent(ex.ToString()));
+                return null;
             }
-
-            return "Get Students";
         }
 
         [HttpPost]
-        public string post()
+        public Task<HttpResponseMessage>? post()
         {
             var activity = Activity.Current;
             activity?.SetTag("Post", "Post request made to M1.");
 
             HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7225/backend");
+            Task<HttpResponseMessage>? task;
             try
             {
-                HttpResponseMessage httpResponse = client.Send(httpRequest);
+                task = client.SendAsync(httpRequest);
             }
             catch (Exception ex)
             {
                 activity?.AddEvent(new ActivityEvent(ex.ToString()));
+                task = null;
             }
 
             metricsHelper.latency.Record(random.Next(10), KeyValuePair.Create<string, object?>("hello", "hi"));
@@ -77,7 +80,7 @@ namespace M1.Controllers
 
             helper();
 
-            return "post students";
+            return task;
         }
 
         [HttpPut]

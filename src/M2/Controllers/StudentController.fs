@@ -38,7 +38,7 @@ type StudentController (metricsHelper : MetricsHelper, logger : ILogger<StudentC
             //generate fake errors for the sake of sampling
             if random.Next(0,10) < 5 then
                 raise (TimeoutException())
-            let httpResponse = client.Send(httpRequest);
+            let httpResponse = client.SendAsync(httpRequest);
             null
         with
         | ex ->  Activity.Current.AddTag("error",true).AddEvent(ActivityEvent(ex.ToString())) |> ignore; null
