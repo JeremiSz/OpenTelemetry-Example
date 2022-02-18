@@ -30,27 +30,6 @@ module RabbitHelper =
     let channel = connection.CreateModel();
     do channel.QueueDeclare(Workflow_QUEUE, false, false, false, null) |> ignore
 
-    let getChannel() =
-        channel
-
-    let producer (channel:IModel) (publisher: unit -> byte[] * IBasicProperties)  = async {
-
-        let body, basicProperties = publisher()
-        channel.BasicPublish("", Workflow_QUEUE, basicProperties,body )
-    }
-
-    let consumer (channel:IModel) queue (handler :obj -> BasicDeliverEventArgs -> unit) (token: CancellationTokenSource) = async {
-        do channel.QueueDeclare(queue, false, false, false, null) |> ignore
-
-        let consumer = EventingBasicConsumer(channel)
-        consumer.Received.AddHandler(new EventHandler<BasicDeliverEventArgs>(handler))
-
-        do channel.BasicConsume(queue, true, consumer) |> ignore
-
-        while not token.IsCancellationRequested do
-            Thread.Sleep(500)
-    }
-
     let ExtractTraceContextFromBasicProperties (props : IBasicProperties) (key : string) : IEnumerable<string> =
         let mutable output = Enumerable.Empty<string>()
         
@@ -62,22 +41,41 @@ module RabbitHelper =
         with 
         | ex -> Console.WriteLine($"Failed to extract trace context: {ex}")
 
-       
         output
 
     let dbhandler sender (data:BasicDeliverEventArgs) =
-        let propagrationContext = Propagator.Extract(Unchecked.defaultof<PropagationContext>, data.BasicProperties, ExtractTraceContextFromBasicProperties)
-        Baggage.Current <- propagrationContext.Baggage
+        async{
+            let propagrationContext = Propagator.Extract(Unchecked.defaultof<PropagationContext>, data.BasicProperties, ExtractTraceContextFromBasicProperties)
+            Baggage.Current <- propagrationContext.Baggage
         
-        use activity = ActivitySource.StartActivity(serviceName,ActivityKind.Consumer,propagrationContext.ActivityContext)
-        activity.SetTag("messaging.system", "rabbitmq") |> ignore
-        activity.SetTag("messaging.destination_kind", "queue") |> ignore
-        activity.SetTag("messaging.rabbitmq.queue", "sample") |> ignore
+            use activity = ActivitySource.StartActivity(serviceName,ActivityKind.Consumer,propagrationContext.ActivityContext)
+            activity.SetTag("messaging.system", "rabbitmq") |> ignore
+            activity.SetTag("messaging.destination_kind", "queue") |> ignore
+            activity.SetTag("messaging.rabbitmq.queue", "sample") |> ignore
         
-        let body = data.Body.ToArray()
-        let message = Encoding.UTF8.GetString(body)
+            let body = data.Body.ToArray()
+            let message = Encoding.UTF8.GetString(body)
 
-        new BsonElement("name",message)
-        |> (new BsonDocument()).Add
-        |> (getCollection workflowCollectionName).InsertOne
+            new BsonElement("name",message)
+            |> (new BsonDocument()).Add
+            |> (getCollection workflowCollectionName).InsertOne
+        }
+        |>ignore
+
+    let consumerObject = EventingBasicConsumer(channel)
+    consumerObject.Received.AddHandler(new EventHandler<BasicDeliverEventArgs>(dbhandler))
+
+    let producer (publisher: unit -> byte[] * IBasicProperties)  = async {
+
+        let body, basicProperties = publisher()
+        channel.BasicPublish("", Workflow_QUEUE, basicProperties,body )
+    }
+
+    let consumer (token: CancellationTokenSource) = async {
+
+        do channel.BasicConsume(Workflow_QUEUE, true, consumerObject) |> ignore
+
+        while not token.IsCancellationRequested do
+            Thread.Sleep(500)
+    }
 

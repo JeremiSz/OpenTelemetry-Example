@@ -53,26 +53,26 @@ namespace M1.Controllers
             catch (Exception ex)
             {
                 activity?.AddEvent(new ActivityEvent(ex.ToString()));
-                return null;
+                return "error";
             }
         }
 
         [HttpPost]
-        public Task<HttpResponseMessage>? post()
+        public async Task<string>? post()
         {
             var activity = Activity.Current;
             activity?.SetTag("Post", "Post request made to M1.");
 
             HttpRequestMessage httpRequest = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7225/backend");
-            Task<HttpResponseMessage>? task;
+            string task;
             try
             {
-                task = client.SendAsync(httpRequest);
+                task = await(await client.SendAsync(httpRequest)).Content.ReadAsStringAsync();
             }
             catch (Exception ex)
             {
                 activity?.AddEvent(new ActivityEvent(ex.ToString()));
-                task = null;
+                task = "error";
             }
 
             metricsHelper.latency.Record(random.Next(10), KeyValuePair.Create<string, object?>("hello", "hi"));
@@ -84,16 +84,16 @@ namespace M1.Controllers
         }
 
         [HttpPut]
-        public string put()
+        public async Task<string> put()
         {
             string connectionStr = "Host=host.docker.internal;Port=5432;Username=postgres;Password=mysecretpassword;Database=postgres;";
 
             var conn = new NpgsqlConnection(connectionStr);
             conn.Open();
 
-            using (var command = new NpgsqlCommand("INSERT INTO test VALUES (1)", conn))
+            await using (var command = new NpgsqlCommand("INSERT INTO test VALUES (1)", conn))
             {
-                command.ExecuteNonQuery();
+                await command.ExecuteNonQueryAsync();
             }
             return "yey"; 
         }

@@ -55,7 +55,6 @@ type StudentController (metricsHelper : MetricsHelper, logger : ILogger<StudentC
     member _.Post() =
         let publisher() =
             use activity = traceProvider.CreateActivity($"{Workflow_QUEUE} send",ActivityKind.Producer)
-            let channel = getChannel()
             let props = channel.CreateBasicProperties()
 
             let contextToInject =
@@ -92,7 +91,11 @@ type StudentController (metricsHelper : MetricsHelper, logger : ILogger<StudentC
             printfn "publish     : %s" message
             
             (body,props)
-        Async.RunSynchronously(producer (getChannel()) publisher)
+
+        producer publisher
+        |> Async.StartAsTask
+        |> Async.AwaitTask
+        |> ignore
         "sent"
 
     

@@ -6,27 +6,25 @@ receivers:
 
 processors:
   batch:
-  tail_sampling:
+  tail_sampling/post_processor_generic:
     decision_wait: 5s
-    num_traces: 100 #default 50000
-    expected_new_traces_per_sec: 1
     policies:
       [
-          {
-            name: probabilistic-policy,
-            type: probabilistic,
-            probabilistic: {sampling_percentage: 25}
-          },
-          {
-            name: latency-policy,
-            type: latency,
-            latency: {threshold_ms: 200}
-          },
-          {
-            name: errors-policy,
-            type: string_attribute,
-            string_attribute: {key: error, values: true}
-          }
+          #{
+          #  name: probabilistic-policy,
+          #  type: probabilistic,
+          #  probabilistic: {sampling_percentage: 25}
+          #},
+          #{
+          #  name: latency-policy,
+          #  type: latency,
+          #  latency: {threshold_ms: 200}
+          #},
+          #{
+          #  name: errors-policy,
+          #  type: string_attribute,
+          #  string_attribute: {key: error, values: [true]}
+          #}
       ]
 
 exporters:
@@ -43,8 +41,10 @@ service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [batch]
+      #tail_sampling/post_processor_generic
+      processors: []
       exporters: [jaeger]
+
     metrics:
       receivers: [otlp]
       processors: [batch]

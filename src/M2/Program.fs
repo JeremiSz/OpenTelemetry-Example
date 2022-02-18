@@ -78,7 +78,7 @@ module Program =
         let token = new CancellationTokenSource()   
               
         //start consumers
-        Async.Start(consumer (getChannel()) Workflow_QUEUE dbhandler token);
+        Async.Start(consumer token);
 
         app.Run()
 

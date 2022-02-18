@@ -47,3 +47,4 @@
 * For filtering traces use [Tail Sampler](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/tailsamplingprocessor) in collector.
 * Examples of Tail Sampling include include probabilistic, string_attribute and numeric_attribute.
 * [Conversation](https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/1797) on possible future deprecation of Tail Sampler.
+* [Discussion](https://github.com/open-telemetry/opentelemetry-collector/issues/2336) on new proccessor for filtering 
