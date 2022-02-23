@@ -44,6 +44,7 @@
 * In Java, you can record information on a throwable by using the recordException() method.
 
 # Useful links
+* [Tool](https://openapm.io/landscape) for panning telemtery systems. Shows avalible tools and compatibility.
 * For filtering traces use [Tail Sampler](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/processor/tailsamplingprocessor) in collector.
 * Examples of Tail Sampling include include probabilistic, string_attribute and numeric_attribute.
 * [Conversation](https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/1797) on possible future deprecation of Tail Sampler.
