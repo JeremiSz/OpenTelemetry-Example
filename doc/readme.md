@@ -28,15 +28,15 @@
 
 # OpenTelemetry Collector
 
-* The Collector receives traces, metrics and logs from microservices.
+* The Collector receives traces, metrics, and logs from microservices.
 * Traces can be received via OpenTelemetry Protocol (OTLP), Jaeger Protocol or Zipkin Protocol.
-* Sampling, compressing and batching are processing options.
+* Sampling, compressing, and batching are processing options.
 * Collector can filter and drop unnecessary data.
 * Can insert additional metadata to the data.
-* Data can be altered through the use of regular expressions.
-* Can have multiple pipelines, each with their own unique receivers, processors and exporters.
+* Data can be altered using regular expressions.
+* Can have multiple pipelines, each with their own unique receivers, processors, and exporters.
 * Traces can be exported to OTLP, Jaeger, Zipkin, Prometheus, etc or just logged to view locally.
-* Contributor version of the Collector supports extra receivers/exporters such as Prometheus, Kafka and Kubernetes.
+* Contributor version of the Collector supports extra receivers/exporters such as Prometheus, Kafka, and Kubernetes.
 * Spans can be renamed by using their metadata tags.
 
 # Java-Specific Information
@@ -50,3 +50,7 @@
 * [Conversation](https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/1797) on possible future deprecation of Tail Sampler.
 * [Discussion](https://github.com/open-telemetry/opentelemetry-collector/issues/2336) on new proccessor for filtering 
 * [Industrial Survey of Microservice Tracing and Analysis](https://link.springer.com/article/10.1007/s10664-021-10063-9)
+* [Talk on tracing in Microservices](https://www.youtube.com/watch?v=Wg_C4O0IhkI)
+* [Netflix talk on their microservice managment](https://www.youtube.com/watch?v=CZ3wIuvmHeM)
+
+
