@@ -49,3 +49,4 @@
 * Examples of Tail Sampling include include probabilistic, string_attribute and numeric_attribute.
 * [Conversation](https://github.com/open-telemetry/opentelemetry-collector-contrib/issues/1797) on possible future deprecation of Tail Sampler.
 * [Discussion](https://github.com/open-telemetry/opentelemetry-collector/issues/2336) on new proccessor for filtering 
+* [Industrial Survey of Microservice Tracing and Analysis](https://link.springer.com/article/10.1007/s10664-021-10063-9)
