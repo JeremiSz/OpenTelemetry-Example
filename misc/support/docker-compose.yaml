@@ -5,7 +5,6 @@ services:
     container_name: prometheus
     volumes:
     - ./prometheus.yaml:/etc/prometheus/prometheus.yml
-    #command: ["--config.file", "/prometheus.yaml"]
     ports:
     - "9090:9090"
   loadbalancer:
@@ -26,11 +25,9 @@ services:
     - ./:/etc/output:rw
     command: ["--config", "/otel-local-config.yaml"]
     ports:
-    #- "4317:4317"
     - "16685:16685"
     - "55690:55690"
 networks:
   default:
     external: true
     name: my-net
-  

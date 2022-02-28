@@ -50,7 +50,7 @@ module Program =
                 .AddHttpClientInstrumentation()
                 .AddAspNetCoreInstrumentation()
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(serviceName).AddTelemetrySdk())
-                .AddMeter("CCS.OpenTelemetry.M2")
+                .AddMeter(serviceName)
                 .AddOtlpExporter()
                 .AddConsoleExporter()
             |> ignore

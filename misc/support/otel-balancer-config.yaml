@@ -2,6 +2,7 @@ receivers:
   otlp/loadbalancer:
     protocols:
       grpc:
+      http:
 
 processors:
   batch:

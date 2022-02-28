@@ -16,6 +16,7 @@ namespace M1.Controllers
         public static long CPU = 0;
         ILogger<StudentController> logger;
         HttpClient client;
+        ActivitySource activitySource;
 
         public StudentController(ILogger<StudentController> logger, ActivitySource activitySource, MetricsHelper metricsHelper)
         {
@@ -25,10 +26,8 @@ namespace M1.Controllers
             this.activitySource = activitySource;
             this.metricsHelper = metricsHelper;
             this.logger = logger;
-            this.client = new HttpClient();
+            client = new HttpClient();
         }
-
-        ActivitySource activitySource;
 
         [HttpGet]
         public async Task<string>? get()
@@ -84,7 +83,7 @@ namespace M1.Controllers
         }
 
         [HttpPut]
-        public async Task<string> put()
+        public async void put()
         {
             string connectionStr = "Host=host.docker.internal;Port=5432;Username=postgres;Password=mysecretpassword;Database=postgres;";
 
@@ -95,7 +94,6 @@ namespace M1.Controllers
             {
                 await command.ExecuteNonQueryAsync();
             }
-            return "yey"; 
         }
 
         void helper()

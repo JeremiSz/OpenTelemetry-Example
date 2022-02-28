@@ -52,5 +52,6 @@
 * [Industrial Survey of Microservice Tracing and Analysis](https://link.springer.com/article/10.1007/s10664-021-10063-9)
 * [Talk on tracing in Microservices](https://www.youtube.com/watch?v=Wg_C4O0IhkI)
 * [Netflix talk on their microservice managment](https://www.youtube.com/watch?v=CZ3wIuvmHeM)
+* [Getting started with tracing and Grafana Tempo Webinar](https://go.grafana.com/dc/gQs7-s99Kr7GlKTAVUezPUFBMknGFfsTzu-4l30sYvt43-vf8F2SwfSQ6GZie-euyWkshh5I5jhAtBiuMmGgW1BmFwXJ4LuTMk0b9IaecxsfGMjgwJyKGjltlwfAfXYWNE-HX1vs54MGSzvQKmprEx-4HctA8wsTEzzss_hhLxJlNHhIKUv04_95EvZ4avFgrS5GPTvi7BCXWEFh-MNuvwe4R8aO5tqpLXz15gAtWJU=/MzU2LVlGRy0zODkAAAGCye6WrwqRodSOl-VgQ3wKzlyzqROeDd9ncS2cfrXjJlDYmpn0KqdiIviNHtjSXN4xmJr1DYE=)
 
 
