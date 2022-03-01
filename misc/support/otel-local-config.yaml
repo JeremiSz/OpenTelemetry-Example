@@ -10,21 +10,21 @@ processors:
     decision_wait: 5s
     policies:
       [
-          #{
-          #  name: probabilistic-policy,
-          #  type: probabilistic,
-          #  probabilistic: {sampling_percentage: 25}
-          #},
-          #{
-          #  name: latency-policy,
-          #  type: latency,
-          #  latency: {threshold_ms: 200}
-          #},
-          #{
-          #  name: errors-policy,
-          #  type: string_attribute,
-          #  string_attribute: {key: error, values: [true]}
-          #}
+          {
+            name: probabilistic-policy,
+            type: probabilistic,
+            probabilistic: {sampling_percentage: 25}
+          },
+          {
+            name: latency-policy,
+            type: latency,
+            latency: {threshold_ms: 200}
+          },
+          {
+            name: errors-policy,
+            type: string_attribute,
+            string_attribute: {key: error, values: [true]}
+          }
       ]
 
 exporters:
@@ -42,7 +42,7 @@ service:
     traces:
       receivers: [otlp]
       #tail_sampling/post_processor_generic
-      processors: []
+      processors: [tail_sampling/post_processor_generic]
       exporters: [jaeger]
 
     metrics:

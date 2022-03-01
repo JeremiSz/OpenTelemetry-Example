@@ -10,6 +10,7 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/baggage"
 	"go.opentelemetry.io/otel/sdk/resource"
+	"go.opentelemetry.io/otel/trace"
 
 	//"go.opentelemetry.io/otel/trace"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
@@ -21,21 +22,56 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
 )
 
-var tracer = otel.Tracer("tracer")
+//var tracer = otel.Tracer("tracer")
 
 func httpHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, World! I am instrumented autoamtically!")
-	ctx := r.Context()
+	//ctx := r.Context()
+	span := trace.SpanFromContext(r.Context())
+	defer span.End()
+	ctx := context.Background()
+	ctx = trace.ContextWithSpan(ctx, span)
+
+	fmt.Println("handler: ", span.SpanContext().SpanID())
+
 	sleepy(ctx)
 }
 
 func sleepy(ctx context.Context) {
 	client := http.Client{Transport: otelhttp.NewTransport(http.DefaultTransport)}
-	_, span := tracer.Start(ctx, "sleep")
+	tracer := otel.Tracer("tracer")
+	//spanCtx := otel.GetTextMapPropagator().Extract(ctx, http)
+	ctx, span := tracer.Start(ctx, "sleep")
+	//ctx = trace.ContextWithSpan(ctx, span)
 	defer span.End()
 
-	req, _ := http.NewRequestWithContext(ctx, "GET", "https://localhost:7225/backend", nil)
-	span.SetAttributes(attribute.String("sleep.duration", "i am not sleeping"))
+	fmt.Println(span.SpanContext().SpanID())
+
+	//req, _ := http.NewRequestWithContext(ctx, "GET", "https://localhost:7225/backend", nil)
+	req, _ := http.NewRequest("GET", "https://localhost:7225/backend", nil)
+	//val := fmt.Sprintf("%.2x-%s-%s-%s", 0, span.SpanContext().TraceID(), span.SpanContext().SpanID(), span.SpanContext().TraceFlags())
+	//req.Header.Set("traceparent", val)
+
+	sc := trace.SpanContextFromContext(ctx)
+	if !sc.IsValid() {
+		return
+	}
+	if ts := sc.TraceState().String(); ts != "" {
+		req.Header.Set("tracestate", ts)
+	}
+	// Clear all flags other than the trace-context supported sampling bit.
+	flags := sc.TraceFlags() & trace.FlagsSampled
+	h := fmt.Sprintf("%.2x-%s-%s-%s",
+		0,
+		sc.TraceID(),
+		sc.SpanID(),
+		flags)
+	req.Header.Set("traceparent", h)
+
+	//tmp := otel.GetTextMapPropagator()
+
+	//span.SetAttributes(attribute.String("sleep.duration", "i am not sleeping"))
+
 	go client.Do(req)
 }
 

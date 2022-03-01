@@ -71,6 +71,8 @@ type StudentController (metricsHelper : MetricsHelper, logger : ILogger<StudentC
                         props.Headers <- (new Dictionary<string, obj>())
 
                     props.Headers[key] <- value
+                    printfn "key: %s" key
+                    printfn "key: %s" value
                 with
                 | ex -> logger.LogError(ex, "Failed to inject trace context.") |> ignore
 
