@@ -42,7 +42,7 @@ service:
     traces:
       receivers: [otlp]
       #tail_sampling/post_processor_generic
-      processors: [tail_sampling/post_processor_generic]
+      processors: []
       exporters: [jaeger]
 
     metrics:

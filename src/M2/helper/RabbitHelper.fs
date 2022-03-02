@@ -45,10 +45,10 @@ module RabbitHelper =
 
     let dbhandler sender (data:BasicDeliverEventArgs) =
         async{
-            let propagrationContext = Propagator.Extract(Unchecked.defaultof<PropagationContext>, data.BasicProperties, ExtractTraceContextFromBasicProperties)
-            Baggage.Current <- propagrationContext.Baggage
+            let propagationContext = Propagator.Extract(Unchecked.defaultof<PropagationContext>, data.BasicProperties, ExtractTraceContextFromBasicProperties)
+            Baggage.Current <- propagationContext.Baggage
         
-            use activity = ActivitySource.StartActivity(serviceName,ActivityKind.Consumer,propagrationContext.ActivityContext)
+            use activity = ActivitySource.StartActivity(serviceName,ActivityKind.Consumer,propagationContext.ActivityContext)
             activity.SetTag("messaging.system", "rabbitmq") |> ignore
             activity.SetTag("messaging.destination_kind", "queue") |> ignore
             activity.SetTag("messaging.rabbitmq.queue", "sample") |> ignore
