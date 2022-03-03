@@ -71,8 +71,6 @@ type StudentController (metricsHelper : MetricsHelper, logger : ILogger<StudentC
                         props.Headers <- (new Dictionary<string, obj>())
 
                     props.Headers[key] <- value
-                    printfn "key: %s" key
-                    printfn "key: %s" value
                 with
                 | ex -> logger.LogError(ex, "Failed to inject trace context.") |> ignore
 
@@ -90,7 +88,6 @@ type StudentController (metricsHelper : MetricsHelper, logger : ILogger<StudentC
             
             let message = sprintf "%f" (rand.NextDouble())
             let body = Encoding.UTF8.GetBytes(message)
-            printfn "publish     : %s" message
             
             (body,props)
 
@@ -98,7 +95,6 @@ type StudentController (metricsHelper : MetricsHelper, logger : ILogger<StudentC
         |> Async.StartAsTask
         |> Async.AwaitTask
         |> ignore
-        "sent"
 
     
 
